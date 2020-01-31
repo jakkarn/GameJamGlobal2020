@@ -622,7 +622,7 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
-    Collab: 1
+    Collab: 0
     UNet: 1
   luminIcon:
     m_Name: 
@@ -636,10 +636,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 44088b56-2524-4bc2-aeb4-ff19f4c4c4a1
+  cloudProjectId: df1e31b5-03cd-4aea-a085-d204f5fe2f33
   framebufferDepthMemorylessMode: 0
   projectName: RepairGameJamGlobal2020
-  organizationId: jakkarn
+  organizationId: mgranberg89-gmail-com-b17d56aa-9da9-448a-ae06-9c105e1d13e0
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
