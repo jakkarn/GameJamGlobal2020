@@ -42,6 +42,8 @@ public class BuildGridView : MonoBehaviour
 
             // Select active block
             gridblocks.GetValue(gridState.activePosition).GetComponent<BlockStates>().Select();
+
+            activeGridPosition = gridState.activePosition;
         }
 
         if (gridState.grid.HasChanged()) {
