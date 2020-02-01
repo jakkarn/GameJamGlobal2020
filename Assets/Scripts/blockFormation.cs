@@ -19,6 +19,9 @@ public class BlockFormation: MonoBehaviour
     private Transform movePoint;
 
     public bool isActive;
+
+    public static int boardHeight = 24;
+    public static int boardWidth = 14;
     
     [SerializeField]
     private BuildGridState buildGridState;
@@ -30,12 +33,18 @@ public class BlockFormation: MonoBehaviour
     public bool[,] startGrid;
     private bool[,] currentGrid;
 
+    private bool canGoLeft = true;
+    private bool canGoRight = true;
+    private bool hitBottom = false;
+
+    private SpawnManager spawnManager;
+
     private StaticBlockContainer staticBlockContainer;
     // Start is called before the first frame update
     void Start()
     {
         staticBlockContainer = FindObjectOfType<StaticBlockContainer>();
-
+        spawnManager = FindObjectOfType<SpawnManager>();
         buildGridState = FindObjectOfType<BuildGridState>();
         isActive = true;
         movePoint.parent = null;
@@ -50,34 +59,38 @@ public class BlockFormation: MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movePoint.position = Vector2.MoveTowards(movePoint.position, transform.position, movementSpeed * Time.deltaTime);
+
+        movePoint.position = Vector3.MoveTowards(movePoint.position, transform.position, movementSpeed * Time.deltaTime);
 
         if (Vector2.Distance(transform.position, movePoint.position) <= 0.5f && isActive)
         {
-            if (Input.GetAxisRaw("Horizontal") == 1f && transform.position.x < 8)
+            if (Input.GetAxisRaw("Horizontal") == 1f)
             {
                 transform.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f);
+                if (!validMove())
+                {
+                    transform.position -= new Vector3(Input.GetAxisRaw("Horizontal"), 0f);
+                }
             }
 
-            if (Input.GetAxisRaw("Horizontal") == -1f && transform.position.x > -8)
+            if (Input.GetAxisRaw("Horizontal") == -1f)
             {
                 transform.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f);
+                if (!validMove())
+                {
+                    transform.position -= new Vector3(Input.GetAxisRaw("Horizontal"), 0f);
+                }
             }
 
             if (Input.GetAxisRaw("Vertical") == -1f)
             {
                 transform.position += new Vector3(0f, Input.GetAxisRaw("Vertical"));
+                if (!validMove())
+                {
+                    transform.position -= new Vector3(0f, Input.GetAxisRaw("Vertical"));
+                    freezeBlockFormation();
+                }
             }
-        }
-
-        if (!(transform.position.y > -7))
-        {
-            isActive = false;
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                staticBlockContainer.addStaticBlock(transform.GetChild(i).position);
-            }
-            Destroy(gameObject);
         }
 
         if (Input.GetButtonDown("z") == true)
@@ -92,13 +105,71 @@ public class BlockFormation: MonoBehaviour
             createGrid(currentGrid);
         }
 
+        moveIntoField();
+
+    }
+
+    private void moveIntoField()
+    {
+        var amountToMoveRight = 0;
+        var amountToMoveLeft = 0;
+
+        foreach (Transform child in transform)
+        {
+            int roundedX = Mathf.RoundToInt(child.transform.position.x);
+
+            amountToMoveRight = System.Math.Min(amountToMoveRight, roundedX);
+
+            var outsideToTheRight = (System.Math.Max(boardWidth - 1, roundedX) - (boardWidth - 1));
+            amountToMoveLeft = System.Math.Max(outsideToTheRight, amountToMoveLeft);
+        }
+
+        if (amountToMoveLeft != 0 || amountToMoveRight != 0)
+        {
+            transform.position += new Vector3(-amountToMoveLeft -amountToMoveRight, 0f);
+        }
+    }
+
+    bool validMove()
+    {
+        foreach (Transform child in transform)
+        {
+            int roundedX = Mathf.RoundToInt(child.transform.position.x);
+            int roundedY = Mathf.RoundToInt(child.transform.position.y);
+
+            if (roundedX < 0 || roundedX >= boardWidth || roundedY < 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void freezeBlockFormation()
+    {
+        isActive = false;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            staticBlockContainer.addStaticBlock(transform.GetChild(i).position);
+        }
+
+        //Sent Ok to build to send new group
+
+        spawnManager.instantiateNewFormation(null);
+        Destroy(gameObject);
     }
 
     private void moveDown()
     {
         if (isActive)
         {
-            transform.position = new Vector2(transform.position.x, transform.position.y - 1);
+
+            transform.position += new Vector3(0, - 1);
+            if (!validMove())
+            {
+                transform.position -= new Vector3(0, - 1);
+                freezeBlockFormation();
+            }
         }
     }
 
