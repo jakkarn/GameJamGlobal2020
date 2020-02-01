@@ -87,9 +87,8 @@ MonoBehaviour:
   timeBetweenMoveDowns: 1
   movementSpeed: 5
   movePoint: {fileID: 5070501188976595347}
-  isActive: 0
-  buildGridState: {fileID: 452735926030331402, guid: 2080a6ed1d106440481d76effe0211ef,
-    type: 3}
+  isActive: 1
+  buildGridState: {fileID: -979639728259327867}
 --- !u!114 &-979639728259327867
 MonoBehaviour:
   m_ObjectHideFlags: 0
