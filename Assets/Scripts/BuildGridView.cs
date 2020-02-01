@@ -32,11 +32,8 @@ public class BuildGridView : MonoBehaviour
     void Update()
     {
         // Update selected block incase change has been made.
-        if (true)
-        {
-            Debug.Log($": ");
-
-
+        // if (activeGridPosition.x != gridState.activePosition.x || gridState.activePosition.y != activeGridPosition.y)
+        // {
             // Unselect former active block
             gridblocks.GetValue(activeGridPosition).GetComponent<BlockStates>().UnSelect();
 
@@ -44,7 +41,7 @@ public class BuildGridView : MonoBehaviour
             gridblocks.GetValue(gridState.activePosition).GetComponent<BlockStates>().Select();
 
             activeGridPosition = gridState.activePosition;
-        }
+        // }
 
         if (gridState.grid.HasChanged()) {
             UpdateGridView();

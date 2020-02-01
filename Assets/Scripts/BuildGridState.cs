@@ -89,23 +89,28 @@ public class BuildGridState : MonoBehaviour
 
         if (Input.GetAxisRaw("Vertical") == 1f)
         {
+            Debug.Log($"Up");
             setDirection(Direction.up);
         }
         if (Input.GetAxisRaw("Vertical") == -1f)
         {
             setDirection(Direction.down);
+            Debug.Log($"Down");
         }
         if (Input.GetAxisRaw("Horizontal") == 1f)
         {
             setDirection(Direction.right);
+            Debug.Log($"Right");
         }
         if (Input.GetAxisRaw("Horizontal") == -1f)
         {
             setDirection(Direction.left);
+            Debug.Log($"Left");
         }
 
+
         // Listen to action input
-        if (/*Input.GetButtonDown("A-Button") ||*/ Input.GetKeyDown("a"))
+        if (/*Input.GetButtonDown("A-Button") ||*/ Input.GetKeyDown("q"))
         {
             grid.Set(activePosition, !grid.GetValue(activePosition));
         }
@@ -171,11 +176,11 @@ public class BuildGridState : MonoBehaviour
                 break;
             // If none, fallback to stored value incase one was inputed between checks and then dropped
             case Direction.none:
-                // if (storedDirection != Direction.none) {
-                //     direction = storedDirection;
-                //     storedDirection = Direction.none;
-                //     UpdateActivePosition();
-                // }
+                if (storedDirection != Direction.none) {
+                    direction = storedDirection;
+                    storedDirection = Direction.none;
+                    UpdateActivePosition();
+                }
                 break;
         }
 
