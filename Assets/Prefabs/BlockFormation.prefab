@@ -103,4 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridHeight: 5
   gridWidth: 5
+  timeBetweenActivePositionChecks: 0
   activePosition: {x: 0, y: 0}
+  direction: 0
+  storedDirection: 0

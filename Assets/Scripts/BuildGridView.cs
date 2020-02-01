@@ -14,6 +14,10 @@ public class BuildGridView : MonoBehaviour
     private Vector2 activeGridPosition = new Vector2();
     private float blockSizeX;
     private float blockSizeY;
+    
+    [SerializeField]
+    private static float timeLeftDefault = 6.0f;
+    private float timeLeft = timeLeftDefault;
 
     // Start is called before the first frame update
     void Start()
@@ -31,9 +35,17 @@ public class BuildGridView : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timeLeft -= Time.deltaTime;
+        if(timeLeft < 0)
+        {
+            // Destroy old blocks?
+            gridState.reset();
+            timeLeft = timeLeftDefault;
+        }
+
         // Update selected block incase change has been made.
-        // if (activeGridPosition.x != gridState.activePosition.x || gridState.activePosition.y != activeGridPosition.y)
-        // {
+        if (activeGridPosition.x != gridState.activePosition.x || gridState.activePosition.y != activeGridPosition.y)
+        {
             // Unselect former active block
             gridblocks.GetValue(activeGridPosition).GetComponent<BlockStates>().UnSelect();
 
@@ -41,7 +53,7 @@ public class BuildGridView : MonoBehaviour
             gridblocks.GetValue(gridState.activePosition).GetComponent<BlockStates>().Select();
 
             activeGridPosition = gridState.activePosition;
-        // }
+        }
 
         if (gridState.grid.HasChanged()) {
             UpdateGridView();

@@ -79,6 +79,7 @@ MonoBehaviour:
   rightBorder: {fileID: 4765096143442118062}
   leftBorder: {fileID: 5874878331144664930}
   bottomBorder: {fileID: 8271289927459294758}
+  GridState: {fileID: 6390683892565264177}
 --- !u!1 &1414386365396118239
 GameObject:
   m_ObjectHideFlags: 0
