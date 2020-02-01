@@ -28,7 +28,7 @@ public class BuildGridView : MonoBehaviour
         blockSizeX = blockSizePrefab.GetComponent<SpriteRenderer>().bounds.size.x;
         blockSizeY = blockSizePrefab.GetComponent<SpriteRenderer>().bounds.size.y;
 
-        Debug.Log($"view size: {blockSizeX}, {blockSizeY}");
+        // Debug.Log($"view size: {blockSizeX}, {blockSizeY}");
 
         InstantiateGridView();
     }

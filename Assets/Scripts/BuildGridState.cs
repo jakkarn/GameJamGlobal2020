@@ -59,7 +59,15 @@ public class BuildGridState : MonoBehaviour
     public int gridWidth = 0;
 
     [SerializeField]
-    private float timeBetweenActivePositionChecks;
+    private float moveDelay;
+    
+    [SerializeField]
+    private float buildDelay;
+    
+    private bool moveIsLocked;
+    private bool buildIsLocked;
+    private float moveTimer;
+    private float buildTimer;
 
     // Position has true == block is build
     [HideInInspector]
@@ -74,57 +82,19 @@ public class BuildGridState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log($"Start {nameof(BuildGridState)}");
+
         grid.Fill(new Vector2(gridWidth, gridHeight));
         grid.Set(new Vector2(3, 3), true);
 
-        InvokeRepeating("UpdateActivePosition", 0, timeBetweenActivePositionChecks);
+        grid.GetMaxX();
+        grid.GetMaxY();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Listen to moement input
 
-        direction = Direction.none;
-
-        if (Input.GetAxisRaw("Vertical") == 1f)
-        {
-            Debug.Log($"Up");
-            setDirection(Direction.up);
-        }
-        if (Input.GetAxisRaw("Vertical") == -1f)
-        {
-            setDirection(Direction.down);
-            Debug.Log($"Down");
-        }
-        if (Input.GetAxisRaw("Horizontal") == 1f)
-        {
-            setDirection(Direction.right);
-            Debug.Log($"Right");
-        }
-        if (Input.GetAxisRaw("Horizontal") == -1f)
-        {
-            setDirection(Direction.left);
-            Debug.Log($"Left");
-        }
-
-
-        // Listen to action input
-        if (/*Input.GetButtonDown("A-Button") ||*/ Input.GetKeyDown("q"))
-        {
-            grid.Set(activePosition, !grid.GetValue(activePosition));
-        }
-    }
-
-    public void setDirection(Direction d)
-    {
-        direction = d;
-        
-        if (direction != Direction.none) {
-            storedDirection = direction;
-        }
-
-        // Debug.Log($"SetDirection: {direction}, {storedDirection}");
     }
 
     public bool CanMoveDirection(Direction direction)
@@ -144,46 +114,46 @@ public class BuildGridState : MonoBehaviour
         return false;
     }
 
-    
-
-    public void UpdateActivePosition()
+    public void ToggleBuildBlock()
     {
-        switch (direction)
+        grid.Set(activePosition, !grid.GetValue(activePosition));
+    }
+
+    public void Move(Direction dir)
+    {
+        if (!CanMoveDirection(dir))
+        {
+            return;
+        }
+
+        if (dir != Direction.none)
+        {
+            //Debug.Log($"INPUT: {dir}");
+        }
+
+        switch (dir)
         {
             case Direction.up:
-                if (!CanMoveDirection(Direction.up))
-                    return;
                 activePosition.Set(activePosition.x, activePosition.y + 1);
-                Debug.Log($"Update active postion: x {activePosition.x}, y {activePosition.y}");
+                // Debug.Log($"Update active postion: x {activePosition.x}, y {activePosition.y}");
                 break;
             case Direction.down:
-                if (!CanMoveDirection(Direction.down))
-                    return;
                 activePosition.Set(activePosition.x, activePosition.y - 1);
-                Debug.Log($"Update active postion: x {activePosition.x}, y {activePosition.y}");
+                // Debug.Log($"Update active postion: x {activePosition.x}, y {activePosition.y}");
                 break;
             case Direction.right:
-                if (!CanMoveDirection(Direction.right))
-                    return;
                 activePosition.Set(activePosition.x + 1, activePosition.y);
-                Debug.Log($"Update active postion: x {activePosition.x}, y {activePosition.y}");
+                // Debug.Log($"Update active postion: x {activePosition.x}, y {activePosition.y}");
                 break;
             case Direction.left:
-                if (!CanMoveDirection(Direction.left))
-                    return;
                 activePosition.Set(activePosition.x - 1, activePosition.y);
-                Debug.Log($"Update active postion: x {activePosition.x}, y {activePosition.y}");
+                // Debug.Log($"Update active postion: x {activePosition.x}, y {activePosition.y}");
                 break;
             // If none, fallback to stored value incase one was inputed between checks and then dropped
-            case Direction.none:
-                if (storedDirection != Direction.none) {
-                    direction = storedDirection;
-                    storedDirection = Direction.none;
-                    UpdateActivePosition();
-                }
+            default:
                 break;
         }
 
-        
+        moveIsLocked = true;
     }
 }
