@@ -16,6 +16,9 @@ public class BuildGridView : MonoBehaviour
     private float blockSizeX;
     private float blockSizeY;
 
+    public float offsetGridX = -6.2f;
+    public float offsetGridY = 1.5f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -90,6 +93,6 @@ public class BuildGridView : MonoBehaviour
 
     private Vector3 GridPosToUnityPos(int x, int y)
     {
-        return new Vector3(x*blockSizeX, y*blockSizeY, 0);
+        return new Vector3(x*blockSizeX+offsetGridX, y*blockSizeY+offsetGridY, 0);
     }
 }

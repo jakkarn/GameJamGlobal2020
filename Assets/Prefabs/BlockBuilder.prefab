@@ -80,16 +80,6 @@ PrefabInstance:
       propertyPath: buildDelay
       value: 0.1
       objectReference: {fileID: 0}
-    - target: {fileID: 452735926030331402, guid: 2080a6ed1d106440481d76effe0211ef,
-        type: 3}
-      propertyPath: activePosition.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 452735926030331402, guid: 2080a6ed1d106440481d76effe0211ef,
-        type: 3}
-      propertyPath: activePosition.y
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 7537700278569276025, guid: 2080a6ed1d106440481d76effe0211ef,
         type: 3}
       propertyPath: m_Name
