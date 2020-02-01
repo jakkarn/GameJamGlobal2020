@@ -4,10 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - wall
-  - leftWall
-  - rightWall
-  - bottomWall
+  - block_placeholder
   layers:
   - Default
   - TransparentFX

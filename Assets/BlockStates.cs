@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class BlockStates : MonoBehaviour
 {
-    private SpriteRenderer childSpriteRenderer;
-    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer blockHolderRenderer;
+    private SpriteRenderer selectionOutlineRenderer;
+    private SpriteRenderer blockRenderer;
 
     public Sprite activeBlock;
     
@@ -17,14 +18,11 @@ public class BlockStates : MonoBehaviour
 
     private Color selectedColor = Color.blue;
 
-
     // Start is called before the first frame update
     void Start()
     {
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        childSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
-
-        childSpriteRenderer.enabled = true;
+        LoadRenderers();
+        blockHolderRenderer.enabled = true;
     }
 
     public void Select()
@@ -32,7 +30,7 @@ public class BlockStates : MonoBehaviour
         isSelected = true;
 
         // Renders border
-        spriteRenderer.enabled = true;
+        selectionOutlineRenderer.enabled = true;
     }
 
     public void UnSelect()
@@ -40,18 +38,36 @@ public class BlockStates : MonoBehaviour
         isSelected = false;
 
         // Removes border
-        spriteRenderer.enabled = false;
+        selectionOutlineRenderer.enabled = false;
     }
 
-     public void ActivateBlock()
+    public void ActivateBlock()
     {
-        blockActive = true;
-        childSpriteRenderer.sprite = activeBlock;
+        //blockActive = true;
+        blockRenderer.enabled = true;
     }
 
     public void DeactivateBlock()
     {
-        blockActive = true;
-        childSpriteRenderer.sprite = unActiveBlock;
+        //blockActive = false; 
+        blockRenderer.enabled = false;
+    }
+
+    private void LoadRenderers()
+    {
+        if (blockRenderer is null || blockHolderRenderer is null || selectionOutlineRenderer is null)
+        {
+            var renderers = gameObject.GetComponentsInChildren<SpriteRenderer>();
+
+            blockHolderRenderer = renderers[0];
+            //Debug.Log($"{blockHolderRenderer.name}"); 
+
+            selectionOutlineRenderer = renderers[1];
+            //Debug.Log($"{selectionOutlineRenderer.name}");
+
+            blockRenderer = renderers[2];
+            //Debug.Log($"{blockRenderer.name}");
+
+        }
     }
 }
