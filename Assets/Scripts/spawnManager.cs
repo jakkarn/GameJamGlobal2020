@@ -43,6 +43,6 @@ public class SpawnManager : MonoBehaviour
     {
         var activeBlockForm = (GameObject)Instantiate(blockFormationPrefab, spawnPoint.position, Quaternion.identity);
         activeBlockFormation = activeBlockForm.GetComponent<BlockFormation>();
-        activeBlockFormation.instantiateChildren(grid);
+        activeBlockFormation.startGrid = grid;
     }
 }

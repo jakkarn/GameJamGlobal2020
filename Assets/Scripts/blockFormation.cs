@@ -27,6 +27,7 @@ public class BlockFormation: MonoBehaviour
     private float blockSizeX;
     private float blockSizeY;
 
+    public bool[,] startGrid;
     private bool[,] currentGrid;
 
     private StaticBlockContainer staticBlockContainer;
@@ -43,6 +44,7 @@ public class BlockFormation: MonoBehaviour
         gridblocks = new GameObject[buildGridState.gridWidth, buildGridState.gridWidth];
         blockSizeX = DefaultBlockPrefab.GetComponent<Renderer>().bounds.size.x;
         blockSizeY = DefaultBlockPrefab.GetComponent<Renderer>().bounds.size.y;
+        instantiateChildren();
     }
 
     // Update is called once per frame
@@ -111,7 +113,14 @@ public class BlockFormation: MonoBehaviour
             {false,false,false,false,false },
         };
 
-        currentGrid = flipGrid(testGrid);
+        if (startGrid != null)
+        {
+            currentGrid = flipGrid(startGrid);
+        } else
+        {
+            currentGrid = flipGrid(testGrid);
+        }
+
         createGrid(currentGrid);
     }
 
@@ -129,7 +138,7 @@ public class BlockFormation: MonoBehaviour
                 
                 if (grid[y, x])
                 {
-                    gridblocks[x, y] = Instantiate(DefaultBlockPrefab, new Vector2(transform.position.x + (x - gridWidth / 2) * blockSizeX, transform.position.y + (y - gridHeight / 2) * blockSizeY), Quaternion.identity, transform);
+                    gridblocks[x, y] = Instantiate(DefaultBlockPrefab, new Vector2(transform.position.x + (x - buildGridState.gridWidth / 2) * blockSizeX, transform.position.y + (y - buildGridState.gridHeight / 2) * blockSizeY), Quaternion.identity, transform);
                 }
                 
             }
