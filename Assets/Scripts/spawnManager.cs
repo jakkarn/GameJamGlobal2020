@@ -41,6 +41,6 @@ public class SpawnManager : MonoBehaviour
         activeBlockFormation = activeBlockForm.GetComponent<BlockFormation>();
         activeBlockFormation.bottomBorder = bottomBorder;
         activeBlockFormation.leftBorder = leftBorder;
-        activeBlockFormation.rightBorder = rightBorder;
+        activeBlockFormation.rightBorder = rightBorder;        
     }
 }

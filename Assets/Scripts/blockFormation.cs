@@ -34,6 +34,8 @@ public class BlockFormation: MonoBehaviour
     private float blockSizeX;
     private float blockSizeY;
 
+    private bool[,] currentGrid;
+
     private StaticBlockContainer staticBlockContainer;
 
     // Start is called before the first frame update
@@ -85,6 +87,18 @@ public class BlockFormation: MonoBehaviour
             Destroy(gameObject);
         }
 
+        if (Input.GetButtonDown("z") == true)
+        {
+            currentGrid = turnPieceLeft(currentGrid);
+            createGrid(currentGrid);
+        }
+
+        if (Input.GetButtonDown("x") == true)
+        {
+            currentGrid = turnPieceRight(currentGrid);
+            createGrid(currentGrid);
+        }
+
     }
 
     private void moveDown()
@@ -98,26 +112,35 @@ public class BlockFormation: MonoBehaviour
     private void instantiateChildren()
     {
         var testGrid = new bool[5, 5]
-            {
-                {true,false,false,false,false },
-                {false,true,false,false,false },
-                {false,false,true,true,true },
-                {false,false,false,false,false },
-                {false,false,false,false,false },
-            };
+        {
+            {true,false,false,false,false },
+            {false,true,false,false,false },
+            {false,false,true,true,true },
+            {false,false,false,false,false },
+            {false,false,false,false,false },
+        };
 
-            var flippedGrid = flipGrid(testGrid);
+        currentGrid = flipGrid(testGrid);
+        createGrid(currentGrid);
+    }
 
-
-
+    private void createGrid(bool[,] grid)
+    {
         for (int x = 0; x < buildGridState.gridWidth; ++x)
         {
             for (int y = 0; y < buildGridState.gridHeight; ++y)
             {
-                if (flippedGrid[y, x])
+                if (gridblocks[x, y] != null)
+                {
+                    Destroy(gridblocks[x, y]);
+                    gridblocks[x, y] = null;
+                }
+                
+                if (grid[y, x])
                 {
                     gridblocks[x, y] = Instantiate(DefaultBlockPrefab, new Vector2(transform.position.x + (x - buildGridState.gridWidth / 2) * blockSizeX, transform.position.y + (y - buildGridState.gridHeight / 2) * blockSizeY), Quaternion.identity, transform);
                 }
+                
             }
         }
     }
@@ -134,6 +157,32 @@ public class BlockFormation: MonoBehaviour
                 newGrid[counter, j] = grid[i, j];
             }
             counter++;
+        }
+        return newGrid;
+    }
+
+    public bool[,] turnPieceRight(bool[,] gridToTurn)
+    {
+        var newGrid = new bool[gridToTurn.GetLength(0), gridToTurn.GetLength(1)];
+        for (int y = 0; y < gridToTurn.GetLength(0); y++)
+        {
+            for (int x = 0; x < gridToTurn.GetLength(1); x++)
+            {
+                newGrid[gridToTurn.GetLength(0) - 1 - x, y] = gridToTurn[y, x];
+            }
+        }
+        return newGrid;
+    }
+
+    public bool[,] turnPieceLeft(bool[,] gridToTurn)
+    {
+        var newGrid = new bool[gridToTurn.GetLength(0), gridToTurn.GetLength(1)];
+        for (int y = 0; y < gridToTurn.GetLength(0); y++)
+        {
+            for (int x = 0; x < gridToTurn.GetLength(1); x++)
+            {
+                newGrid[x, gridToTurn.GetLength(0) - 1 - y] = gridToTurn[y, x];
+            }
         }
         return newGrid;
     }
