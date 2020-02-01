@@ -37,12 +37,14 @@ public class BlockFormation: MonoBehaviour
     private bool canGoRight = true;
     private bool hitBottom = false;
 
+    private SpawnManager spawnManager;
+
     private StaticBlockContainer staticBlockContainer;
     // Start is called before the first frame update
     void Start()
     {
         staticBlockContainer = FindObjectOfType<StaticBlockContainer>();
-
+        spawnManager = FindObjectOfType<SpawnManager>();
         buildGridState = FindObjectOfType<BuildGridState>();
         isActive = true;
         movePoint.parent = null;
@@ -102,11 +104,6 @@ public class BlockFormation: MonoBehaviour
             currentGrid = turnPieceRight(currentGrid);
             createGrid(currentGrid);
         }
-        
-        if (hitBottom)
-        {
-            freezeBlockFormation();
-        }
     }
 
     bool validMove()
@@ -133,7 +130,8 @@ public class BlockFormation: MonoBehaviour
         }
 
         //Sent Ok to build to send new group
-        instantiateChildren();
+
+        spawnManager.instantiateNewFormation(null);
         Destroy(gameObject);
     }
 
@@ -141,7 +139,13 @@ public class BlockFormation: MonoBehaviour
     {
         if (isActive)
         {
-            transform.position = new Vector2(transform.position.x, transform.position.y - 1);
+
+            transform.position += new Vector3(0, - 1);
+            if (!validMove())
+            {
+                transform.position -= new Vector3(0, - 1);
+                freezeBlockFormation();
+            }
         }
     }
 
