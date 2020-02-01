@@ -19,6 +19,9 @@ public class SpawnManager : MonoBehaviour
 
     private BlockFormation activeBlockFormation;
 
+    private GameObject activeBlockForm;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,12 +39,23 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            
+        if (activeBlockForm == null)
+        {
+            var testGrid = new bool[5, 5]
+            {
+                { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
+                { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
+                { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
+                { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
+                { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
+            };
+            instantiateNewFormation(testGrid);
+        }
     }
 
     public void instantiateNewFormation(bool[,] grid)
     {
-        var activeBlockForm = (GameObject)Instantiate(blockFormationPrefab, spawnPoint.position, Quaternion.identity);
+        activeBlockForm = Instantiate(blockFormationPrefab, spawnPoint.position, Quaternion.identity);
         activeBlockFormation = activeBlockForm.GetComponent<BlockFormation>();
         activeBlockFormation.startGrid = grid;
     }
