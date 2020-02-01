@@ -19,6 +19,9 @@ public class BlockFormation: MonoBehaviour
     private Transform movePoint;
 
     public bool isActive;
+
+    public static int boardHeight = 24;
+    public static int boardWith = 14;
     
     [SerializeField]
     private BuildGridState buildGridState;
@@ -29,6 +32,10 @@ public class BlockFormation: MonoBehaviour
 
     public bool[,] startGrid;
     private bool[,] currentGrid;
+
+    private bool canGoLeft = true;
+    private bool canGoRight = true;
+    private bool hitBottom = false;
 
     private StaticBlockContainer staticBlockContainer;
     // Start is called before the first frame update
@@ -50,34 +57,38 @@ public class BlockFormation: MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movePoint.position = Vector2.MoveTowards(movePoint.position, transform.position, movementSpeed * Time.deltaTime);
+
+        movePoint.position = Vector3.MoveTowards(movePoint.position, transform.position, movementSpeed * Time.deltaTime);
 
         if (Vector2.Distance(transform.position, movePoint.position) <= 0.5f && isActive)
         {
-            if (Input.GetAxisRaw("Horizontal") == 1f && transform.position.x < 8)
+            if (Input.GetAxisRaw("Horizontal") == 1f)
             {
                 transform.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f);
+                if (!validMove())
+                {
+                    transform.position -= new Vector3(Input.GetAxisRaw("Horizontal"), 0f);
+                }
             }
 
-            if (Input.GetAxisRaw("Horizontal") == -1f && transform.position.x > -8)
+            if (Input.GetAxisRaw("Horizontal") == -1f)
             {
                 transform.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f);
+                if (!validMove())
+                {
+                    transform.position -= new Vector3(Input.GetAxisRaw("Horizontal"), 0f);
+                }
             }
 
             if (Input.GetAxisRaw("Vertical") == -1f)
             {
                 transform.position += new Vector3(0f, Input.GetAxisRaw("Vertical"));
+                if (!validMove())
+                {
+                    transform.position -= new Vector3(0f, Input.GetAxisRaw("Vertical"));
+                    freezeBlockFormation();
+                }
             }
-        }
-
-        if (!(transform.position.y > -7))
-        {
-            isActive = false;
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                staticBlockContainer.addStaticBlock(transform.GetChild(i).position);
-            }
-            Destroy(gameObject);
         }
 
         if (Input.GetButtonDown("z") == true)
@@ -91,7 +102,39 @@ public class BlockFormation: MonoBehaviour
             currentGrid = turnPieceRight(currentGrid);
             createGrid(currentGrid);
         }
+        
+        if (hitBottom)
+        {
+            freezeBlockFormation();
+        }
+    }
 
+    bool validMove()
+    {
+        foreach (Transform child in transform)
+        {
+            int roundedX = Mathf.RoundToInt(child.transform.position.x);
+            int roundedY = Mathf.RoundToInt(child.transform.position.y);
+
+            if (roundedX < 0 || roundedX >= boardWith || roundedY < 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void freezeBlockFormation()
+    {
+        isActive = false;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            staticBlockContainer.addStaticBlock(transform.GetChild(i).position);
+        }
+
+        //Sent Ok to build to send new group
+        instantiateChildren();
+        Destroy(gameObject);
     }
 
     private void moveDown()
