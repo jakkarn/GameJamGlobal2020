@@ -85,8 +85,6 @@ MonoBehaviour:
     type: 3}
   SelectedBlockPrefab: {fileID: 8817225818661896601, guid: 4ad242a5fe18af3d7ad9717ddbe18495,
     type: 3}
-  gridSize: 25
-  blockPrefab: {fileID: 0}
   timeBetweenMoveDowns: 1
   movementSpeed: 5
   movePoint: {fileID: 5070501188976595347}
