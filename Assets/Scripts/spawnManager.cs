@@ -22,25 +22,27 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        instantiateNewFormation();
+        var testGrid = new bool[5, 5]
+        {
+            { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
+            { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
+            { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
+            { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
+            { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
+        };
+        instantiateNewFormation(testGrid);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (activeBlockFormation && !activeBlockFormation.isActive)
-        {
-            activeBlockFormation = null;
-            instantiateNewFormation();
-        }
+            
     }
 
-    private void instantiateNewFormation()
+    public void instantiateNewFormation(bool[,] grid)
     {
         var activeBlockForm = (GameObject)Instantiate(blockFormationPrefab, spawnPoint.position, Quaternion.identity);
         activeBlockFormation = activeBlockForm.GetComponent<BlockFormation>();
-        activeBlockFormation.bottomBorder = bottomBorder;
-        activeBlockFormation.leftBorder = leftBorder;
-        activeBlockFormation.rightBorder = rightBorder;
+        activeBlockFormation.instantiateChildren(grid);
     }
 }

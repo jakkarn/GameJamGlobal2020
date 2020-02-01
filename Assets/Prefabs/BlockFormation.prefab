@@ -40,6 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3103734382853574871}
   - component: {fileID: 4814532369070900898}
+  - component: {fileID: -979639728259327867}
   m_Layer: 0
   m_Name: BlockFormation
   m_TagString: Untagged
@@ -79,8 +80,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd6a52c30fcba1428fcc1b28e2ae8c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridState: {fileID: 7537700278569276025, guid: 2080a6ed1d106440481d76effe0211ef,
-    type: 3}
   DefaultBlockPrefab: {fileID: 5933339266632864101, guid: ad33587480c852699b049b6f99c58e80,
     type: 3}
   SelectedBlockPrefab: {fileID: 8817225818661896601, guid: 4ad242a5fe18af3d7ad9717ddbe18495,
@@ -88,7 +87,21 @@ MonoBehaviour:
   timeBetweenMoveDowns: 1
   movementSpeed: 5
   movePoint: {fileID: 5070501188976595347}
-  leftBorder: {fileID: 0}
-  rightBorder: {fileID: 0}
-  bottomBorder: {fileID: 0}
   isActive: 0
+  buildGridState: {fileID: 452735926030331402, guid: 2080a6ed1d106440481d76effe0211ef,
+    type: 3}
+--- !u!114 &-979639728259327867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4814532369070900899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45896a69c1ec916b59a6a904d404a8e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridHeight: 5
+  gridWidth: 5
+  activePosition: {x: 0, y: 0}

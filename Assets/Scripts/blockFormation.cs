@@ -5,8 +5,6 @@ using UnityEngine;
 public class BlockFormation: MonoBehaviour
 {
     [SerializeField]
-    private GameObject gridState;
-    [SerializeField]
     private GameObject DefaultBlockPrefab;
     [SerializeField]
     private GameObject SelectedBlockPrefab;
@@ -20,28 +18,22 @@ public class BlockFormation: MonoBehaviour
     [SerializeField]
     private Transform movePoint;
 
-    [HideInInspector]
-    public Transform leftBorder;
-    [HideInInspector]
-    public Transform rightBorder;
-    [HideInInspector]
-    public Transform bottomBorder;
-
     public bool isActive;
-
+    
+    [SerializeField]
     private BuildGridState buildGridState;
+    
     private GameObject[,] gridblocks;
     private float blockSizeX;
     private float blockSizeY;
 
     private StaticBlockContainer staticBlockContainer;
-
     // Start is called before the first frame update
     void Start()
     {
         staticBlockContainer = FindObjectOfType<StaticBlockContainer>();
 
-        buildGridState = gridState.GetComponent<BuildGridState>();
+        buildGridState = FindObjectOfType<BuildGridState>();
         isActive = true;
         movePoint.parent = null;
         InvokeRepeating("moveDown", 0, timeBetweenMoveDowns);
@@ -49,7 +41,6 @@ public class BlockFormation: MonoBehaviour
         gridblocks = new GameObject[buildGridState.gridWidth, buildGridState.gridWidth];
         blockSizeX = DefaultBlockPrefab.GetComponent<Renderer>().bounds.size.x;
         blockSizeY = DefaultBlockPrefab.GetComponent<Renderer>().bounds.size.y;
-        instantiateChildren();
     }
 
     // Update is called once per frame
@@ -59,12 +50,12 @@ public class BlockFormation: MonoBehaviour
 
         if (Vector2.Distance(transform.position, movePoint.position) <= 0.5f && isActive)
         {
-            if (Input.GetAxisRaw("Horizontal") == 1f && transform.position.x < rightBorder.position.x)
+            if (Input.GetAxisRaw("Horizontal") == 1f && transform.position.x < 8)
             {
                 transform.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f);
             }
 
-            if (Input.GetAxisRaw("Horizontal") == -1f && transform.position.x > leftBorder.position.x)
+            if (Input.GetAxisRaw("Horizontal") == -1f && transform.position.x > -8)
             {
                 transform.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f);
             }
@@ -75,7 +66,7 @@ public class BlockFormation: MonoBehaviour
             }
         }
 
-        if (!(transform.position.y > bottomBorder.position.y))
+        if (!(transform.position.y > -7))
         {
             isActive = false;
             for (int i = 0; i < transform.childCount; i++)
@@ -95,20 +86,13 @@ public class BlockFormation: MonoBehaviour
         }
     }
 
-    private void instantiateChildren()
+    public void instantiateChildren(bool[,] grid)
     {
-        var testGrid = new bool[5, 5]
-            {
-                {true,false,false,false,false },
-                {false,true,false,false,false },
-                {false,false,true,true,true },
-                {false,false,false,false,false },
-                {false,false,false,false,false },
-            };
 
-            var flippedGrid = flipGrid(testGrid);
+        var flippedGrid = flipGrid(grid);
 
-
+        var gridHeight = grid.GetLength(0);
+        var gridWidth = grid.GetLength(1);
 
         for (int x = 0; x < buildGridState.gridWidth; ++x)
         {
@@ -116,7 +100,7 @@ public class BlockFormation: MonoBehaviour
             {
                 if (flippedGrid[y, x])
                 {
-                    gridblocks[x, y] = Instantiate(DefaultBlockPrefab, new Vector2(transform.position.x + (x - buildGridState.gridWidth / 2) * blockSizeX, transform.position.y + (y - buildGridState.gridHeight / 2) * blockSizeY), Quaternion.identity, transform);
+                    gridblocks[x, y] = Instantiate(DefaultBlockPrefab, new Vector2(transform.position.x + (x - gridWidth / 2) * blockSizeX, transform.position.y + (y - gridHeight / 2) * blockSizeY), Quaternion.identity, transform);
                 }
             }
         }
