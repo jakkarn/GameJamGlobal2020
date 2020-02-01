@@ -12,12 +12,6 @@ public class BlockFormation: MonoBehaviour
     private GameObject SelectedBlockPrefab;
 
     [SerializeField]
-    private int gridSize;
-
-    [SerializeField]
-    private GameObject blockPrefab;
-
-    [SerializeField]
     private float timeBetweenMoveDowns;
 
     [SerializeField]
@@ -40,9 +34,13 @@ public class BlockFormation: MonoBehaviour
     private float blockSizeX;
     private float blockSizeY;
 
+    private StaticBlockContainer staticBlockContainer;
+
     // Start is called before the first frame update
     void Start()
     {
+        staticBlockContainer = FindObjectOfType<StaticBlockContainer>();
+
         buildGridState = gridState.GetComponent<BuildGridState>();
         isActive = true;
         movePoint.parent = null;
@@ -80,6 +78,11 @@ public class BlockFormation: MonoBehaviour
         if (!(transform.position.y > bottomBorder.position.y))
         {
             isActive = false;
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                staticBlockContainer.addStaticBlock(transform.GetChild(i).position);
+            }
+            Destroy(gameObject);
         }
 
     }
@@ -94,8 +97,6 @@ public class BlockFormation: MonoBehaviour
 
     private void instantiateChildren()
     {
-        //for (int i = 0; i < gridSize; i++)
-        //{
         for (int x = 0; x < buildGridState.gridWidth; ++x)
         {
             for (int y = 0; y < buildGridState.gridHeight; ++y)
@@ -103,13 +104,6 @@ public class BlockFormation: MonoBehaviour
                 gridblocks[x, y] = Instantiate(DefaultBlockPrefab, new Vector2(transform.position.x + (x - buildGridState.gridWidth/2) * blockSizeX, transform.position.y + (y - buildGridState.gridHeight/2) * blockSizeY), Quaternion.identity, transform);
             }
         }
-        //}
-    }
-
-
-    private Vector3 GridPosToUnityPos(int x, int y)
-    {
-        return new Vector3(x * blockSizeX, y * blockSizeY, 0);
     }
 
 }
