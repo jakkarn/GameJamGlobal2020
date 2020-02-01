@@ -2,8 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class blockFormation: MonoBehaviour
+public class BlockFormation: MonoBehaviour
 {
+    [SerializeField]
+    private GameObject gridState;
+    [SerializeField]
+    private GameObject DefaultBlockPrefab;
+    [SerializeField]
+    private GameObject SelectedBlockPrefab;
+
+    [SerializeField]
+    private int gridSize;
+
+    [SerializeField]
+    private GameObject blockPrefab;
+
     [SerializeField]
     private float timeBetweenMoveDowns;
 
@@ -22,12 +35,23 @@ public class blockFormation: MonoBehaviour
 
     public bool isActive;
 
+    private BuildGridState buildGridState;
+    private GameObject[,] gridblocks;
+    private float blockSizeX;
+    private float blockSizeY;
+
     // Start is called before the first frame update
     void Start()
     {
+        buildGridState = gridState.GetComponent<BuildGridState>();
         isActive = true;
         movePoint.parent = null;
         InvokeRepeating("moveDown", 0, timeBetweenMoveDowns);
+
+        gridblocks = new GameObject[buildGridState.gridWidth, buildGridState.gridWidth];
+        blockSizeX = DefaultBlockPrefab.GetComponent<Renderer>().bounds.size.x;
+        blockSizeY = DefaultBlockPrefab.GetComponent<Renderer>().bounds.size.y;
+        instantiateChildren();
     }
 
     // Update is called once per frame
@@ -56,8 +80,6 @@ public class blockFormation: MonoBehaviour
         if (!(transform.position.y > bottomBorder.position.y))
         {
             isActive = false;
-            gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-            
         }
 
     }
@@ -69,4 +91,25 @@ public class blockFormation: MonoBehaviour
             transform.position = new Vector2(transform.position.x, transform.position.y - 1);
         }
     }
+
+    private void instantiateChildren()
+    {
+        //for (int i = 0; i < gridSize; i++)
+        //{
+        for (int x = 0; x < buildGridState.gridWidth; ++x)
+        {
+            for (int y = 0; y < buildGridState.gridHeight; ++y)
+            {
+                gridblocks[x, y] = Instantiate(DefaultBlockPrefab, new Vector2(transform.position.x + (x - buildGridState.gridWidth/2) * blockSizeX, transform.position.y + (y - buildGridState.gridHeight/2) * blockSizeY), Quaternion.identity, transform);
+            }
+        }
+        //}
+    }
+
+
+    private Vector3 GridPosToUnityPos(int x, int y)
+    {
+        return new Vector3(x * blockSizeX, y * blockSizeY, 0);
+    }
+
 }

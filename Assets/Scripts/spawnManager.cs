@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class spawnManager : MonoBehaviour
+public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject blockFormationPrefab;
@@ -17,7 +17,8 @@ public class spawnManager : MonoBehaviour
     [SerializeField]
     private Transform bottomBorder;
 
-    private blockFormation activeBlockFormation;
+    private BlockFormation activeBlockFormation;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +38,7 @@ public class spawnManager : MonoBehaviour
     private void instantiateNewFormation()
     {
         var activeBlockForm = (GameObject)Instantiate(blockFormationPrefab, spawnPoint.position, Quaternion.identity);
-        activeBlockFormation = activeBlockForm.GetComponent<blockFormation>();
+        activeBlockFormation = activeBlockForm.GetComponent<BlockFormation>();
         activeBlockFormation.bottomBorder = bottomBorder;
         activeBlockFormation.leftBorder = leftBorder;
         activeBlockFormation.rightBorder = rightBorder;

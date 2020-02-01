@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BuildGridView : MonoBehaviour
 {
-    //[HideInspector]
+    [HideInInspector]
     public GameObject GridState;
     public GameObject DefaultBlockPrefab;
     public GameObject SelectedBlockPrefab;
