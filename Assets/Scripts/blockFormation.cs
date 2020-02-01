@@ -97,13 +97,45 @@ public class BlockFormation: MonoBehaviour
 
     private void instantiateChildren()
     {
+        var testGrid = new bool[5, 5]
+            {
+                {true,false,false,false,false },
+                {false,true,false,false,false },
+                {false,false,true,true,true },
+                {false,false,false,false,false },
+                {false,false,false,false,false },
+            };
+
+            var flippedGrid = flipGrid(testGrid);
+
+
+
         for (int x = 0; x < buildGridState.gridWidth; ++x)
         {
             for (int y = 0; y < buildGridState.gridHeight; ++y)
             {
-                gridblocks[x, y] = Instantiate(DefaultBlockPrefab, new Vector2(transform.position.x + (x - buildGridState.gridWidth/2) * blockSizeX, transform.position.y + (y - buildGridState.gridHeight/2) * blockSizeY), Quaternion.identity, transform);
+                if (flippedGrid[y, x])
+                {
+                    gridblocks[x, y] = Instantiate(DefaultBlockPrefab, new Vector2(transform.position.x + (x - buildGridState.gridWidth / 2) * blockSizeX, transform.position.y + (y - buildGridState.gridHeight / 2) * blockSizeY), Quaternion.identity, transform);
+                }
             }
         }
+    }
+
+    private bool[,] flipGrid(bool[,] grid)
+    {
+       
+        var counter = 0;
+        var newGrid = new bool[grid.GetLength(0), grid.GetLength(1)];
+        for (int i = grid.GetLength(0) - 1; i >= 0; i--)
+        {
+            for (int j = 0; j < grid.GetLength(1) - 1; j++)
+            {
+                newGrid[counter, j] = grid[i, j];
+            }
+            counter++;
+        }
+        return newGrid;
     }
 
     // test comment
