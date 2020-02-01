@@ -21,7 +21,7 @@ public class BlockFormation: MonoBehaviour
     public bool isActive;
 
     public static int boardHeight = 24;
-    public static int boardWith = 14;
+    public static int boardWidth = 14;
     
     [SerializeField]
     private BuildGridState buildGridState;
@@ -104,6 +104,30 @@ public class BlockFormation: MonoBehaviour
             currentGrid = turnPieceRight(currentGrid);
             createGrid(currentGrid);
         }
+
+        moveIntoField();
+
+    }
+
+    private void moveIntoField()
+    {
+        var amountToMoveRight = 0;
+        var amountToMoveLeft = 0;
+
+        foreach (Transform child in transform)
+        {
+            int roundedX = Mathf.RoundToInt(child.transform.position.x);
+
+            amountToMoveRight = System.Math.Min(amountToMoveRight, roundedX);
+
+            var outsideToTheRight = (System.Math.Max(boardWidth - 1, roundedX) - (boardWidth - 1));
+            amountToMoveLeft = System.Math.Max(outsideToTheRight, amountToMoveLeft);
+        }
+
+        if (amountToMoveLeft != 0 || amountToMoveRight != 0)
+        {
+            transform.position += new Vector3(-amountToMoveLeft -amountToMoveRight, 0f);
+        }
     }
 
     bool validMove()
@@ -113,7 +137,7 @@ public class BlockFormation: MonoBehaviour
             int roundedX = Mathf.RoundToInt(child.transform.position.x);
             int roundedY = Mathf.RoundToInt(child.transform.position.y);
 
-            if (roundedX < 0 || roundedX >= boardWith || roundedY < 0)
+            if (roundedX < 0 || roundedX >= boardWidth || roundedY < 0)
             {
                 return false;
             }
