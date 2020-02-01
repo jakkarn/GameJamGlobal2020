@@ -156,6 +156,12 @@ PrefabInstance:
       propertyPath: GridState
       value: 
       objectReference: {fileID: 5729315829068051859}
+    - target: {fileID: 1968611223070506375, guid: aa775e19dbca02651a7612665d85856e,
+        type: 3}
+      propertyPath: BlockPrefab
+      value: 
+      objectReference: {fileID: 9121806663975281069, guid: a2c91217caad8d840ba681fb9aa5f257,
+        type: 3}
     - target: {fileID: 3278221461638779426, guid: aa775e19dbca02651a7612665d85856e,
         type: 3}
       propertyPath: m_Name

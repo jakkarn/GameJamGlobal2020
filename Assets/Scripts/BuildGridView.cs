@@ -6,13 +6,12 @@ public class BuildGridView : MonoBehaviour
 {
     //[HideInspector]
     public GameObject GridState;
-    public GameObject DefaultBlockPrefab;
-    public GameObject SelectedBlockPrefab;
+    public GameObject BlockPrefab;
 
     //[SerializeField]
-    private GameObject[,] gridblocks;
+    private Grid<GameObject> gridblocks;
     private BuildGridState gridState;
-    private Vector2 activeGridPosition;
+    private Vector2 activeGridPosition = new Vector2();
     private float blockSizeX;
     private float blockSizeY;
 
@@ -21,12 +20,10 @@ public class BuildGridView : MonoBehaviour
     {
         gridState = GridState.GetComponent<BuildGridState>();
 
-        activeGridPosition = gridState.activePosition;
+        gridblocks.Fill(new Vector2(gridState.gridWidth, gridState.gridHeight));
 
-        gridblocks = new GameObject[gridState.gridWidth, gridState.gridWidth];
-
-        blockSizeX = DefaultBlockPrefab.GetComponent<Renderer>().bounds.size.x;
-        blockSizeY = DefaultBlockPrefab.GetComponent<Renderer>().bounds.size.y;
+        blockSizeX = BlockPrefab.GetComponent<Renderer>().bounds.size.x;
+        blockSizeY = BlockPrefab.GetComponent<Renderer>().bounds.size.y;
 
         InstantiateGridView();
     }
@@ -34,17 +31,27 @@ public class BuildGridView : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        activeGridPosition = gridState.activePosition;
+        // Update selected block incase change has been made.
+        if (true)
+        {
+            Debug.Log($": ");
+
+
+            // Unselect former active block
+            gridblocks.GetValue(activeGridPosition).GetComponent<BlockStates>().UnSelect();
+
+            // Select active block
+            gridblocks.GetValue(gridState.activePosition).GetComponent<BlockStates>().Select();
+        }
+
+        if (gridState.grid.HasChanged()) {
+            UpdateGridView();
+        }
     }
 
     private void InstantiateGridView()
     {
-        Debug.Log($"x size of default: {DefaultBlockPrefab.GetComponent<Renderer>().bounds.size.x}");
-        Debug.Log($"x size of selected: {SelectedBlockPrefab.GetComponent<Renderer>().bounds.size.x}");
-
         InstantiateGridBlocks();
-
-        UpdateGridView();
     }
 
     private void InstantiateGridBlocks()
@@ -53,14 +60,7 @@ public class BuildGridView : MonoBehaviour
         {
             for (int y = 0; y < gridState.gridHeight; ++y)
             {
-                if (activeGridPosition.x == x && activeGridPosition.y == y) //is selected
-                {
-                    gridblocks[x,y] = Instantiate(SelectedBlockPrefab, GridPosToUnityPos(x,y), Quaternion.identity);
-                }
-                else
-                {
-                    gridblocks[x,y] = Instantiate(DefaultBlockPrefab, GridPosToUnityPos(x,y), Quaternion.identity);
-                }
+                gridblocks.Set(new Vector2(x,y), Instantiate(BlockPrefab, GridPosToUnityPos(x,y), Quaternion.identity));
             }
         }
     }
@@ -72,13 +72,13 @@ public class BuildGridView : MonoBehaviour
         {
             for (int y = 0; y < gridState.gridHeight; ++y)
             {
-                if (gridState.grid[x,y]) //has block
+                if (gridState.grid.GetValue(new Vector2(x, y))) //has block
                 {
-
+                    gridblocks.GetValue(new Vector2(x, y)).GetComponent<BlockStates>().ActivateBlock();
                 }
                 else
                 {
-                    
+                    gridblocks.GetValue(new Vector2(x, y)).GetComponent<BlockStates>().DeactivateBlock();
                 }
             }
         }

@@ -56,8 +56,6 @@ public class blockFormation: MonoBehaviour
         if (!(transform.position.y > bottomBorder.position.y))
         {
             isActive = false;
-            gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-            
         }
 
     }
