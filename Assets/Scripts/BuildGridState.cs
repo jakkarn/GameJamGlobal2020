@@ -65,22 +65,22 @@ public struct Grid<T> {
         grid = null;
     }
 
-    // public int CountSetValues()
-    // {
-    //     var setValueCount = 0;
+    public int CountSetValues()
+    {
+        var setValueCount = 0;
 
-    //     for (int x = 0; x < GetMaxY(); ++x)
-    //     {
-    //         for (int y = 0; y < GetMaxX(); ++y)
-    //         {
-    //             if (GetValue(new Vector2(x, y)).Equals(default(T)))
-    //             {
-    //                 setValueCount++;
-    //             }
-    //         }
-    //     }
-    //     return setValueCount;
-    // }
+        for (int x = 0; x < GetMaxY(); ++x)
+        {
+            for (int y = 0; y < GetMaxX(); ++y)
+            {
+                if (GetValue(new Vector2(x, y)).Equals(default(T)))
+                {
+                    setValueCount++;
+                }
+            }
+        }
+        return setValueCount;
+    }
 }
 
 public enum Direction {
@@ -119,16 +119,15 @@ public class BuildGridState : MonoBehaviour
 
     private Grid<bool> buildBlockFormation;
 
-    // public GameObject BlockCounterObject;
-    // private BlockCounter BlockCounter;
+    private BlockCounter BlockCounter;
 
     // Start is called before the first frame update
     void Start()
     {
-        //Debug.Log($"Start {nameof(BuildGridState)}");
+        // Debug.Log($"Start {nameof(BuildGridState)}");
 
         grid.Fill(new Vector2(gridWidth, gridHeight));
-        // BlockCounter = BlockCounterObject.GetComponent<BlockCounter>();
+        BlockCounter = FindObjectOfType<BlockCounter>();
 
         grid.GetMaxX();
         grid.GetMaxY();
@@ -218,6 +217,6 @@ public class BuildGridState : MonoBehaviour
      public void NewFormation()
     {
         buildBlockFormation = grid;
-        // BlockCounter.RemoveCreatedFormationBlocks();
+        BlockCounter.RemoveCreatedFormationBlocks(buildBlockFormation.CountSetValues());
     }
 }
