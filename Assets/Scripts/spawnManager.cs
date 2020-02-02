@@ -19,6 +19,10 @@ public class SpawnManager : MonoBehaviour
 
     private BlockFormation activeBlockFormation;
 
+    public GameObject GridState;
+
+    private BuildGridState gridState;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,15 +38,21 @@ public class SpawnManager : MonoBehaviour
 
 
         instantiateNewFormation(null);
+
+        gridState = GridState.GetComponent<BuildGridState>();
     }
 
     // Update is called once per frame
     void Update()
     {
-            
+        var grid = gridState.GetNewFormation();
+        if (grid != null)
+        {
+            instantiateNewFormation(grid);
+        }
     }
 
-    public void instantiateNewFormation(bool[,] grid)
+    public void instantiateNewFormation(bool [,] grid)
     {
         var testGrid = new bool[5, 5]
        {
@@ -56,6 +66,6 @@ public class SpawnManager : MonoBehaviour
 
         var activeBlockForm = (GameObject)Instantiate(blockFormationPrefab, spawnPoint.position, Quaternion.identity);
         activeBlockFormation = activeBlockForm.GetComponent<BlockFormation>();
-        activeBlockFormation.startGrid = grid != null ? grid : testGrid;
+        activeBlockFormation.startGrid = grid != null ? activeBlockFormation.turnPieceRight(grid) : testGrid;
     }
 }

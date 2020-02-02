@@ -121,6 +121,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &620729348 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5729315829068051859, guid: 35d51d21fa3b4590a94a226d81a8dd49,
+    type: 3}
+  m_PrefabInstance: {fileID: 6600247193430256208}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &882170136
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,7 +138,7 @@ GameObject:
   - component: {fileID: 882170138}
   - component: {fileID: 882170137}
   m_Layer: 0
-  m_Name: New Sprite
+  m_Name: BackgroundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -413,6 +419,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1714911927, guid: d0f9f24eddc3500c3a1be859dcc2f1ad, type: 3}
+      propertyPath: GridState
+      value: 
+      objectReference: {fileID: 620729348}
     - target: {fileID: 4157417454266278829, guid: d0f9f24eddc3500c3a1be859dcc2f1ad,
         type: 3}
       propertyPath: m_LocalPosition.x
