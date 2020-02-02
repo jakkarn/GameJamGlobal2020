@@ -216,7 +216,44 @@ public class BuildGridState : MonoBehaviour
 
      public void NewFormation()
     {
-        buildBlockFormation = grid;
+        if(isEmpty(grid))
+        {
+            buildBlockFormation = new Grid<bool>();
+            buildBlockFormation.Fill(new Vector2(gridWidth, gridHeight));
+            var newRandomArray = new bool[5, 5]
+            {
+                {(Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f)},
+                {(Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f)},
+                {(Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f)},
+                {(Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f)},
+                {(Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f)},
+            };
+            buildBlockFormation.Set(newRandomArray);
+        }else
+        {
+            buildBlockFormation = grid;
+
+        }
         //BlockCounter.RemoveCreatedFormationBlocks(buildBlockFormation.CountSetValues());
     }
+
+    private bool isEmpty(Grid<bool> grid)
+    {
+        var counter = 0;
+        foreach (var item in grid.GetInnerGrid())
+        {
+            if (item == true)
+            {
+                counter++;
+            }
+        }
+
+        if (counter < 3)
+        {
+            return true;
+        }
+
+        return false;
+    }
 }
+
