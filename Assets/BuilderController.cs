@@ -24,6 +24,9 @@ public class BuilderController : MonoBehaviour
     [SerializeField]
     private float moveInitialDelay;
 
+    private bool player2 = true;
+    private bool player1 = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -246,8 +249,8 @@ public class BuilderController : MonoBehaviour
 
         if(controller != 0) 
         {
-            var xAxis = Input.GetAxis("Horizontal" + controller);
-            var yAxis = Input.GetAxis("Vertical" + controller);
+            var xAxis = (player1 ? Input.GetAxis("Horizontal1") : 0) + (player2 ? Input.GetAxis("Horizontal2") : 0);
+            var yAxis = (player1 ? Input.GetAxis("Vertical1" ) : 0) + (player2 ? Input.GetAxis("Vertical2") : 0);
             
             //Debug.Log($"controller1: {xAxis}, {yAxis}");
             
@@ -289,12 +292,18 @@ public class BuilderController : MonoBehaviour
         return dir;
     }
 
+    public void SwitchPlayer()
+    {
+        player1 = !player1;
+        player2 = !player2;
+    }
+
     private bool PlaceBlockPressed()
     {
         if (controller != 0) 
         {
 
-            if (Input.GetButtonDown("Placeblock" + controller)) 
+            if (player1 ? Input.GetButtonDown("Placeblock1") : false || player2 ? Input.GetButtonDown("Placeblock2") : false) 
             {
                 //Debug.Log($"controller1: {Input.GetButtonDown("Placeblock" + controller)}");
                 return true;
