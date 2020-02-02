@@ -35,10 +35,6 @@ public class BlockFormation: MonoBehaviour
     public bool[,] startGrid;
     private bool[,] currentGrid;
 
-    private bool canGoLeft = true;
-    private bool canGoRight = true;
-    private bool hitBottom = false;
-
     private SpawnManager spawnManager;
 
     private StaticBlockContainer staticBlockContainer;
@@ -66,30 +62,32 @@ public class BlockFormation: MonoBehaviour
 
         if (Vector2.Distance(transform.position, movePoint.position) <= 0.5f && isActive)
         {
-            if (Input.GetAxisRaw("Horizontal") == 1f)
+            if (Input.GetButton("HorizontalRight") || Input.GetAxis("Horizontal1") >= 0.75f)
             {
-                transform.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f);
+                var value = Input.GetAxis("Horizontal1");
+                transform.position += new Vector3(1f, 0f);
                 if (!validMove())
                 {
-                    transform.position -= new Vector3(Input.GetAxisRaw("Horizontal"), 0f);
+                    transform.position -= new Vector3(1f, 0f);
                 }
             }
 
-            if (Input.GetAxisRaw("Horizontal") == -1f)
+            if (Input.GetButton("HorizontalLeft") || Input.GetAxis("Horizontal1") < -0.75f)
             {
-                transform.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f);
+                var value = Input.GetAxis("Horizontal1");
+                transform.position += new Vector3(-1f, 0f);
                 if (!validMove())
                 {
-                    transform.position -= new Vector3(Input.GetAxisRaw("Horizontal"), 0f);
+                    transform.position -= new Vector3(-1f, 0f);
                 }
             }
 
-            if (Input.GetAxisRaw("Vertical") == -1f)
+            if (Input.GetButton("Vertical") || Input.GetAxis("Vertical1") < -0.75f)
             {
-                transform.position += new Vector3(0f, Input.GetAxisRaw("Vertical"));
+                transform.position += new Vector3(0f, -1);
                 if (!validMove())
                 {
-                    transform.position -= new Vector3(0f, Input.GetAxisRaw("Vertical"));
+                    transform.position -= new Vector3(0f, -1);
                     freezeBlockFormation();
                 }
             }
@@ -105,6 +103,17 @@ public class BlockFormation: MonoBehaviour
         {
             currentGrid = turnPieceRight(currentGrid);
             createGrid(currentGrid);
+        }
+
+        if (Input.GetButtonDown("downfall"))
+        {
+            do
+            {
+                transform.position += new Vector3(0f, -1);
+            } while (validMove());
+            
+            transform.position += new Vector3(0f, 1);
+            freezeBlockFormation();
         }
 
         moveIntoField();
