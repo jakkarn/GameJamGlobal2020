@@ -26,16 +26,6 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //var testGrid = new bool[5, 5]
-        //{
-        //    { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
-        //    { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
-        //    { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
-        //    { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
-        //    { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
-        //};
-
-
 
         instantiateNewFormation(null);
 
