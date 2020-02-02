@@ -13,6 +13,8 @@ public struct Grid<T> {
 
     public void Fill(Vector2 vector) {
         grid = new T[(int)vector.x, (int)vector.y];
+
+        changed = true;
     }
 
     public void Set(T[,] newGrid)
