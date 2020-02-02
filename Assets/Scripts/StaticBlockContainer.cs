@@ -25,10 +25,13 @@ public class StaticBlockContainer : MonoBehaviour
 
     private BuildGridState buildGridState;
 
+    private BlockCounter blockCounter;
+
     // Start is called before the first frame update
     void Start()
     {
         buildGridState = state.GetComponent<BuildGridState>();
+        blockCounter = FindObjectOfType<BlockCounter>();
     }
 
     // Update is called once per frame
@@ -90,6 +93,7 @@ public class StaticBlockContainer : MonoBehaviour
         }
         if (rowWasDeleted)
         {
+            blockCounter.ReturnBlocksInFormationToCounter(boardWidth);
             checkLines();
         }
     }

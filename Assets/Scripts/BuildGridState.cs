@@ -119,7 +119,8 @@ public class BuildGridState : MonoBehaviour
 
     private Grid<bool> buildBlockFormation;
 
-    private BlockCounter blockCounter = null;
+    // public GameObject blockCounterObject;
+    private BlockCounter blockCounter;
 
     // Start is called before the first frame update
     void Start()
@@ -127,10 +128,11 @@ public class BuildGridState : MonoBehaviour
         // Debug.Log($"Start {nameof(BuildGridState)}");
 
         grid.Fill(new Vector2(gridWidth, gridHeight));
+        // blockCounter = blockCounterObject.GetComponent<BlockCounter>();
         blockCounter = FindObjectOfType<BlockCounter>();
 
-        grid.GetMaxX();
-        grid.GetMaxY();
+        // grid.Set(new Vector2(0,0), true);
+        // grid.Set(new Vector2(0,1), true);
     }
 
     // Update is called once per frame
@@ -164,6 +166,11 @@ public class BuildGridState : MonoBehaviour
 
     public void ToggleBuildBlock()
     {
+        // Check if blocks still left to use
+        if (!grid.GetValue(activePosition) && blockCounter.GetAmount() <= 0) {
+            return;
+        }
+
         moveIsLocked = true;
         grid.Set(activePosition, !grid.GetValue(activePosition));
     }

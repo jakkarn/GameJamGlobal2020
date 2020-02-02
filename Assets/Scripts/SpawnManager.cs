@@ -62,16 +62,17 @@ public class SpawnManager : MonoBehaviour
             {false, false, false, false,false },
             {false, false, false, false,false },
             {true, false, false, false,false },
-            {true, true, true, true,false },
+            {true, true, false, false,false },
        };
         if (counter % 5 == 0)
         {
-            timeBetweenMoveDowns -= 0.1f;
+            // timeBetweenMoveDowns -= 0.1f;
         }
         if (counter % 5 == 0)
         {
             SwitchPlayer();
         }
+        // grid = null;
         var activeBlockForm = (GameObject)Instantiate(blockFormationPrefab, spawnPoint.position, Quaternion.identity);
         activeBlockFormation = activeBlockForm.GetComponent<BlockFormation>();
         activeBlockFormation.startGrid = grid != null ? activeBlockFormation.turnPieceRight(grid) : testGrid;
