@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+
+    public static float timeBetweenMoveDowns = 1f;
+
     [SerializeField]
     private GameObject blockFormationPrefab;
 
@@ -22,6 +25,8 @@ public class SpawnManager : MonoBehaviour
     public GameObject GridState;
 
     private BuildGridState gridState;
+
+    private int counter = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -53,9 +58,13 @@ public class SpawnManager : MonoBehaviour
             {true, false, false, false,false },
             {true, true, true, true,false },
        };
-
+        if (counter % 5 == 0)
+        {
+            timeBetweenMoveDowns = timeBetweenMoveDowns - 0.1f;
+        }
         var activeBlockForm = (GameObject)Instantiate(blockFormationPrefab, spawnPoint.position, Quaternion.identity);
         activeBlockFormation = activeBlockForm.GetComponent<BlockFormation>();
         activeBlockFormation.startGrid = grid != null ? activeBlockFormation.turnPieceRight(grid) : testGrid;
+        counter++;
     }
 }
