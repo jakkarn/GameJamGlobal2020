@@ -13,8 +13,6 @@ public class BuildArea : MonoBehaviour
     [SerializeField]
     private Transform visualBlockContainer;
 
-    [SerializeField]
-    private int totalNumberOfBlocks = 30;
 
     [SerializeField]
     private GameObject destroyParticle;
@@ -22,10 +20,9 @@ public class BuildArea : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(initSpawnRoutine());
     }
 
-    IEnumerator initSpawnRoutine()
+    IEnumerator initSpawnRoutine(int totalNumberOfBlocks)
     {
         for (int i = 0; i < totalNumberOfBlocks; i++)
         {
@@ -36,6 +33,10 @@ public class BuildArea : MonoBehaviour
         }
     }
 
+    public void starting(int numberOfBlocks)
+    {
+        StartCoroutine(initSpawnRoutine(numberOfBlocks));
+    }
     public void removeVisualBlocks(int numberOfBlocks)
     {
         StartCoroutine(removeBlocks(numberOfBlocks));
