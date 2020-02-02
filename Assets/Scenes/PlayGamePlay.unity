@@ -121,6 +121,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &63738175 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5465801191145787175, guid: 412cacca98c2790448fe72e2df684b2b,
+    type: 3}
+  m_PrefabInstance: {fileID: 4919641210997231258}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &150833894
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -128,6 +134,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1714911927, guid: d0f9f24eddc3500c3a1be859dcc2f1ad, type: 3}
+      propertyPath: GridState
+      value: 
+      objectReference: {fileID: 1185765076}
+    - target: {fileID: 1714911927, guid: d0f9f24eddc3500c3a1be859dcc2f1ad, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 63738175}
     - target: {fileID: 4157417454266278829, guid: d0f9f24eddc3500c3a1be859dcc2f1ad,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -273,6 +287,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1185765076 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6390683892565264177, guid: d0f9f24eddc3500c3a1be859dcc2f1ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 150833894}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1914011983 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1714911925, guid: d0f9f24eddc3500c3a1be859dcc2f1ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 150833894}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4919641210997231258
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -280,6 +306,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 623308519650947513, guid: 412cacca98c2790448fe72e2df684b2b,
+        type: 3}
+      propertyPath: controller
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 623308519650947513, guid: 412cacca98c2790448fe72e2df684b2b,
+        type: 3}
+      propertyPath: spawnManager
+      value: 
+      objectReference: {fileID: 1914011983}
     - target: {fileID: 4919641210854948740, guid: 412cacca98c2790448fe72e2df684b2b,
         type: 3}
       propertyPath: m_Name

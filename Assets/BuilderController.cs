@@ -24,6 +24,9 @@ public class BuilderController : MonoBehaviour
     [SerializeField]
     private float moveInitialDelay;
 
+    private SpawnManager spawnManagerScript;
+    public GameObject spawnManager;
+
     private bool player2 = true;
     private bool player1 = false;
 
@@ -31,7 +34,7 @@ public class BuilderController : MonoBehaviour
     void Start()
     {
         buildGridState = gridStateGameObject.GetComponent<BuildGridState>();
-        
+        spawnManagerScript = spawnManager.GetComponent<SpawnManager>();
         InitializeLocks();
     }
 
@@ -239,7 +242,7 @@ public class BuilderController : MonoBehaviour
         {
             dir = Direction.none;
         }
-
+        
         return dir;
     }
 
@@ -249,8 +252,8 @@ public class BuilderController : MonoBehaviour
 
         if(controller != 0) 
         {
-            var xAxis = (player1 ? Input.GetAxis("Horizontal1") : 0) + (player2 ? Input.GetAxis("Horizontal2") : 0);
-            var yAxis = (player1 ? Input.GetAxis("Vertical1" ) : 0) + (player2 ? Input.GetAxis("Vertical2") : 0);
+            var xAxis = (!spawnManagerScript.player1T ? Input.GetAxis("Horizontal1") : 0) + (!spawnManagerScript.player2T ? Input.GetAxis("Horizontal2") : 0);
+            var yAxis = (!spawnManagerScript.player1T ? Input.GetAxis("Vertical1" ) : 0) + (!spawnManagerScript.player2T ? Input.GetAxis("Vertical2") : 0);
             
             //Debug.Log($"controller1: {xAxis}, {yAxis}");
             
@@ -292,18 +295,12 @@ public class BuilderController : MonoBehaviour
         return dir;
     }
 
-    public void SwitchPlayer()
-    {
-        player1 = !player1;
-        player2 = !player2;
-    }
-
     private bool PlaceBlockPressed()
     {
         if (controller != 0) 
         {
 
-            if (player1 ? Input.GetButtonDown("Placeblock1") : false || player2 ? Input.GetButtonDown("Placeblock2") : false) 
+            if (!spawnManagerScript.player1T ? Input.GetButtonDown("Placeblock1") : false || !spawnManagerScript.player2T ? Input.GetButtonDown("Placeblock2") : false) 
             {
                 //Debug.Log($"controller1: {Input.GetButtonDown("Placeblock" + controller)}");
                 return true;
