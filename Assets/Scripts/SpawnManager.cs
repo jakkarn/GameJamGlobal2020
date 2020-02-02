@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
 
-    public static float timeBetweenMoveDowns = 1f;
+    public float timeBetweenMoveDowns = 1f;
 
     [SerializeField]
     private GameObject blockFormationPrefab;
@@ -60,7 +60,7 @@ public class SpawnManager : MonoBehaviour
        };
         if (counter % 5 == 0)
         {
-            timeBetweenMoveDowns = timeBetweenMoveDowns - 0.1f;
+            timeBetweenMoveDowns -= 0.1f;
         }
         var activeBlockForm = (GameObject)Instantiate(blockFormationPrefab, spawnPoint.position, Quaternion.identity);
         activeBlockFormation = activeBlockForm.GetComponent<BlockFormation>();
