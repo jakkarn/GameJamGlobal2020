@@ -66,7 +66,7 @@ public class SpawnManager : MonoBehaviour
        };
         if (counter % 5 == 0)
         {
-            timeBetweenMoveDowns = timeBetweenMoveDowns - 0.1f;
+            timeBetweenMoveDowns -= 0.1f;
         }
         if (counter % 5 == 0)
         {

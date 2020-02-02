@@ -119,7 +119,7 @@ public class BuildGridState : MonoBehaviour
 
     private Grid<bool> buildBlockFormation;
 
-    private BlockCounter BlockCounter;
+    private BlockCounter blockCounter = null;
 
     // Start is called before the first frame update
     void Start()
@@ -127,7 +127,7 @@ public class BuildGridState : MonoBehaviour
         // Debug.Log($"Start {nameof(BuildGridState)}");
 
         grid.Fill(new Vector2(gridWidth, gridHeight));
-        BlockCounter = FindObjectOfType<BlockCounter>();
+        blockCounter = FindObjectOfType<BlockCounter>();
 
         grid.GetMaxX();
         grid.GetMaxY();
@@ -217,6 +217,10 @@ public class BuildGridState : MonoBehaviour
      public void NewFormation()
     {
         buildBlockFormation = grid;
+<<<<<<< HEAD
         //BlockCounter.RemoveCreatedFormationBlocks(buildBlockFormation.CountSetValues());
+=======
+        blockCounter.RemoveCreatedFormationBlocks(buildBlockFormation.CountSetValues());
+>>>>>>> 0d28d3484e80b7de2dec01a2f47243801e794fbc
     }
 }
