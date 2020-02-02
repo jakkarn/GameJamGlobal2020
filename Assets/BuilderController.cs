@@ -5,6 +5,9 @@ using UnityEngine;
 public class BuilderController : MonoBehaviour
 {
     public GameObject gridStateGameObject;
+
+    public int controller;
+
     private BuildGridState buildGridState;
 
     private Dictionary<Direction, bool> moveIsLocked = new Dictionary<Direction, bool>();
@@ -32,7 +35,16 @@ public class BuilderController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var dir = GetMovementInput();
+        Direction dir;
+
+        if (controller == 0)
+        {
+            dir = GetKeyMoveInput();
+        }
+        else
+        {
+             dir = GetControllerMoveInput();
+        }
 
         UpdateMoveLocks();
 
@@ -40,6 +52,7 @@ public class BuilderController : MonoBehaviour
 
         // Listen to action input
         if (Input.GetKeyDown("q"))
+        //if (PlaceBlockPressed())
         {
             buildGridState.ToggleBuildBlock();
         }
@@ -178,14 +191,19 @@ public class BuilderController : MonoBehaviour
         }
     }
 
-    private Direction GetMovementInput()
+    private Direction GetKeyMoveInput()
     {
         Direction dir;
 
-        var u = Input.GetAxisRaw("Vertical") == 1f;
-        var d = Input.GetAxisRaw("Vertical") == -1f;
-        var r = Input.GetAxisRaw("Horizontal") == 1f;
-        var l = Input.GetAxisRaw("Horizontal") == -1f;
+        // var u = Input.GetAxisRaw("Vertical") == 1f;
+        // var d = Input.GetAxisRaw("Vertical") == -1f;
+        // var r = Input.GetAxisRaw("Horizontal") == 1f;
+        // var l = Input.GetAxisRaw("Horizontal") == -1f;
+
+        var u = Input.GetKey("w");
+        var d = Input.GetKey("s");
+        var l = Input.GetKey("a");
+        var r = Input.GetKey("d");
 
         if (r && l || d && u)
         {
@@ -213,5 +231,69 @@ public class BuilderController : MonoBehaviour
         }
 
         return dir;
+    }
+
+    private Direction GetControllerMoveInput()
+    {
+        Direction dir;
+
+        if(controller != 0) 
+        {
+            var xAxis = Input.GetAxis("Horizontal" + controller);
+            var yAxis = Input.GetAxis("Vertical" + controller);
+            
+            Debug.Log($"controller1: {xAxis}, {yAxis}");
+            
+            var r = xAxis > 0;
+            var l = xAxis < 0;
+            var u = yAxis > 0;
+            var d = yAxis < 0;
+
+            if (r && l || d && u)
+            {
+                dir = Direction.none;
+            }
+            else if (u && !d)
+            {
+                dir = Direction.up;
+            }
+            else if (d && !u)
+            {
+                dir = Direction.down;
+            }
+            else if (r && !l)
+            {
+                dir = Direction.right;
+            }
+            else if (l && !r)
+            {
+                dir = Direction.left;
+            }
+            else
+            {
+                dir = Direction.none;
+            }
+        }
+        else
+        {
+            dir = Direction.none;
+        }
+
+        return dir;
+    }
+
+    private bool PlaceBlockPressed()
+    {
+        if (controller != 0) 
+        {
+            Debug.Log($"controller1: {Input.GetButtonDown("Placeblock" + controller)}");
+
+            if (Input.GetButtonDown("Placeblock" + controller)) 
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

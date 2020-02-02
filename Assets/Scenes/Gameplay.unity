@@ -225,6 +225,11 @@ PrefabInstance:
       propertyPath: gridStateGameObject
       value: 
       objectReference: {fileID: 1868749902}
+    - target: {fileID: 5539564252455004695, guid: 677b3c51f7d937a06a54175c2cb639c1,
+        type: 3}
+      propertyPath: controller
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7549619398195736703, guid: 677b3c51f7d937a06a54175c2cb639c1,
         type: 3}
       propertyPath: m_LocalPosition.x
