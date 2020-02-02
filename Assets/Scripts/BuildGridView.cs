@@ -6,7 +6,8 @@ public class BuildGridView : MonoBehaviour
 {
     //[HideInspector]
     public GameObject GridState;
-    public GameObject BlockPrefab;
+    public GameObject blockRenderer;
+    public GameObject blockSizePrefab;
 
     //[SerializeField]
     private Grid<GameObject> gridblocks;
@@ -19,15 +20,22 @@ public class BuildGridView : MonoBehaviour
     private static float timeLeftDefault = 6.0f;
     private float timeLeft = timeLeftDefault;
 
+    public float offsetGridX = -6.2f;
+    public float offsetGridY = 1.5f;
+
     // Start is called before the first frame update
     void Start()
     {
         gridState = GridState.GetComponent<BuildGridState>();
 
+        //Debug.Log($"{blockRenderer.name}");
+
         gridblocks.Fill(new Vector2(gridState.gridWidth, gridState.gridHeight));
 
-        blockSizeX = BlockPrefab.GetComponent<Renderer>().bounds.size.x;
-        blockSizeY = BlockPrefab.GetComponent<Renderer>().bounds.size.y;
+        blockSizeX = blockSizePrefab.GetComponent<SpriteRenderer>().bounds.size.x;
+        blockSizeY = blockSizePrefab.GetComponent<SpriteRenderer>().bounds.size.y;
+
+        // Debug.Log($"view size: {blockSizeX}, {blockSizeY}");
 
         InstantiateGridView();
     }
@@ -55,7 +63,8 @@ public class BuildGridView : MonoBehaviour
             activeGridPosition = gridState.activePosition;
         }
 
-        if (gridState.grid.HasChanged()) {
+        if (gridState.grid.HasChanged()) 
+        {
             UpdateGridView();
         }
     }
@@ -71,11 +80,10 @@ public class BuildGridView : MonoBehaviour
         {
             for (int y = 0; y < gridState.gridHeight; ++y)
             {
-                gridblocks.Set(new Vector2(x,y), Instantiate(BlockPrefab, GridPosToUnityPos(x,y), Quaternion.identity));
+                gridblocks.Set(new Vector2(x,y), Instantiate(blockRenderer, GridPosToUnityPos(x,y), Quaternion.identity));
             }
         }
     }
-
 
     private void UpdateGridView()
     {
@@ -97,6 +105,6 @@ public class BuildGridView : MonoBehaviour
 
     private Vector3 GridPosToUnityPos(int x, int y)
     {
-        return new Vector3(x*blockSizeX, y*blockSizeY, 0);
+        return new Vector3(x*blockSizeX+offsetGridX, y*blockSizeY+offsetGridY, 0);
     }
 }

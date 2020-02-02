@@ -26,15 +26,18 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var testGrid = new bool[5, 5]
-        {
-            { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
-            { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
-            { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
-            { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
-            { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
-        };
-        instantiateNewFormation(testGrid);
+        //var testGrid = new bool[5, 5]
+        //{
+        //    { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
+        //    { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
+        //    { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
+        //    { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
+        //    { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
+        //};
+
+
+
+        instantiateNewFormation(null);
 
         gridState = GridState.GetComponent<BuildGridState>();
     }
@@ -51,8 +54,18 @@ public class SpawnManager : MonoBehaviour
 
     public void instantiateNewFormation(bool [,] grid)
     {
+        var testGrid = new bool[5, 5]
+       {
+            
+            {false, false, false, false,false },
+            {false, false, false, false,false },
+            {false, false, false, false,false },
+            {true, false, false, false,false },
+            {true, true, true, true,false },
+       };
+
         var activeBlockForm = (GameObject)Instantiate(blockFormationPrefab, spawnPoint.position, Quaternion.identity);
         activeBlockFormation = activeBlockForm.GetComponent<BlockFormation>();
-        activeBlockFormation.startGrid = activeBlockFormation.turnPieceRight(grid);
+        activeBlockFormation.startGrid = grid != null ? activeBlockFormation.turnPieceRight(grid) : testGrid;
     }
 }

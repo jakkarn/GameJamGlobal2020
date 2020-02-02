@@ -4,9 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - RightBorder
-  - LeftBorder
-  - BottomBorder
+  - block_placeholder
   layers:
   - Default
   - TransparentFX
@@ -43,4 +41,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: particles
+    uniqueID: 1487496711
     locked: 0

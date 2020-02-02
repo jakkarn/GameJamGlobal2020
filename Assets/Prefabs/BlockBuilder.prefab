@@ -116,7 +116,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 452735926030331402, guid: 2080a6ed1d106440481d76effe0211ef,
         type: 3}
-      propertyPath: timeBetweenActivePositionChecks
+      propertyPath: moveDelay
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 452735926030331402, guid: 2080a6ed1d106440481d76effe0211ef,
+        type: 3}
+      propertyPath: buildDelay
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 7537700278569276025, guid: 2080a6ed1d106440481d76effe0211ef,
@@ -207,7 +212,7 @@ PrefabInstance:
       objectReference: {fileID: 5729315829068051859}
     - target: {fileID: 1968611223070506375, guid: aa775e19dbca02651a7612665d85856e,
         type: 3}
-      propertyPath: BlockPrefab
+      propertyPath: blockRenderer
       value: 
       objectReference: {fileID: 9121806663975281069, guid: a2c91217caad8d840ba681fb9aa5f257,
         type: 3}

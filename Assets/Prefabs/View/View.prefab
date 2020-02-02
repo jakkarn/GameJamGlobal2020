@@ -44,4 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GridState: {fileID: 0}
-  BlockPrefab: {fileID: 0}
+  blockRenderer: {fileID: 0}
+  blockSizePrefab: {fileID: 7838249916429901403, guid: 4f79f1487491ce14081928c8bd772275,
+    type: 3}
