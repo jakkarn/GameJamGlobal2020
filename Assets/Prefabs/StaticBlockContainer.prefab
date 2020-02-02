@@ -43,5 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11a74fefce917cc439221b5a94983b57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  frozenSprite: {fileID: 21300000, guid: a416d2ef92c16aa46aab7acfa9f8da82, type: 3}
   staticBlock: {fileID: 6144653517531905007, guid: 447a847cceda32844a6cfca69f8f8a72,
+    type: 3}
+  destroyLine: {fileID: 5425700866058620280, guid: 4808f93025ad1b84683c915259b7a063,
     type: 3}

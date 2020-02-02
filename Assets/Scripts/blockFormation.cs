@@ -22,6 +22,8 @@ public class BlockFormation: MonoBehaviour
 
     public static int boardHeight = 24;
     public static int boardWidth = 14;
+
+  
     
     [SerializeField]
     private BuildGridState buildGridState;
@@ -136,27 +138,36 @@ public class BlockFormation: MonoBehaviour
         {
             int roundedX = Mathf.RoundToInt(child.transform.position.x);
             int roundedY = Mathf.RoundToInt(child.transform.position.y);
+            
+          
 
             if (roundedX < 0 || roundedX >= boardWidth || roundedY < 0)
             {
                 return false;
             }
+            
+            if (!staticBlockContainer.isPositionFree(roundedX, roundedY))
+            {
+                return false;
+            }
+         
         }
         return true;
     }
 
     private void freezeBlockFormation()
     {
+        
         isActive = false;
-        for (int i = 0; i < transform.childCount; i++)
+        int childCount = transform.childCount;
+        for (int i = childCount - 1 ; i >= 0; i--)
         {
-            staticBlockContainer.addStaticBlock(transform.GetChild(i).position);
+            staticBlockContainer.addBlock(transform.GetChild(i).transform);
+            transform.GetChild(i).parent = staticBlockContainer.transform;
         }
-
-        //Sent Ok to build to send new group
-
         spawnManager.instantiateNewFormation(null);
         Destroy(gameObject);
+
     }
 
     private void moveDown()
