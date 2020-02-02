@@ -80,7 +80,7 @@ public class BuildGridView : MonoBehaviour
         {
             for (int y = 0; y < gridState.gridHeight; ++y)
             {
-                gridblocks.Set(new Vector2(x,y), Instantiate(blockRenderer, GridPosToUnityPos(x,y), Quaternion.identity));
+                gridblocks.Set(new Vector2(x,y), Instantiate(blockRenderer, GridPosToUnityPos(x,y), Quaternion.identity, transform));
             }
         }
     }
@@ -105,6 +105,6 @@ public class BuildGridView : MonoBehaviour
 
     private Vector3 GridPosToUnityPos(int x, int y)
     {
-        return new Vector3(x*blockSizeX+offsetGridX, y*blockSizeY+offsetGridY, 0);
+        return new Vector3(x*(blockSizeX * 2)+transform.position.x, y*(blockSizeY * 2)+transform.position.y, 0);
     }
 }
