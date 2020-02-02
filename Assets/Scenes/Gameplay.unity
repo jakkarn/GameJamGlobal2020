@@ -127,6 +127,24 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6600247193430256208}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &637520584 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1262198842020894054, guid: 35d51d21fa3b4590a94a226d81a8dd49,
+    type: 3}
+  m_PrefabInstance: {fileID: 6600247193430256208}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &637520585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637520584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd421bdacb13d0e46aa3c265eb8ead31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &882170136
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,12 +226,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1868749902 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5729315829068051859, guid: 35d51d21fa3b4590a94a226d81a8dd49,
-    type: 3}
-  m_PrefabInstance: {fileID: 6600247193430256208}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3809496262763517882
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -230,11 +242,11 @@ PrefabInstance:
         type: 3}
       propertyPath: gridStateGameObject
       value: 
-      objectReference: {fileID: 1868749902}
+      objectReference: {fileID: 620729348}
     - target: {fileID: 5539564252455004695, guid: 677b3c51f7d937a06a54175c2cb639c1,
         type: 3}
       propertyPath: controller
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7549619398195736703, guid: 677b3c51f7d937a06a54175c2cb639c1,
         type: 3}
@@ -405,12 +417,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2400881490330896864, guid: 35d51d21fa3b4590a94a226d81a8dd49,
+        type: 3}
+      propertyPath: BlockCounterObject
+      value: 
+      objectReference: {fileID: 637520584}
     - target: {fileID: 3460279570595762736, guid: 35d51d21fa3b4590a94a226d81a8dd49,
         type: 3}
       propertyPath: m_Name
       value: BlockBuilder
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6241734349510577218, guid: 35d51d21fa3b4590a94a226d81a8dd49, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 35d51d21fa3b4590a94a226d81a8dd49, type: 3}
 --- !u!1001 &6906539829554340452
 PrefabInstance:

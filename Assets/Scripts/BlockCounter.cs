@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class BlockCounter : MonoBehaviour
 {
-    [SerializeField]
-    private static int StartBlockAmount;
+    private static int StartBlockAmount = 50;
 
     private int BlockAmount = StartBlockAmount;
 
