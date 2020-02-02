@@ -31,7 +31,7 @@ public class SpawnManager : MonoBehaviour
         //    { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
         //};
 
-       
+
 
         instantiateNewFormation(null);
     }
@@ -46,11 +46,12 @@ public class SpawnManager : MonoBehaviour
     {
         var testGrid = new bool[5, 5]
        {
+            
             {false, false, false, false,false },
             {false, false, false, false,false },
             {false, false, false, false,false },
             {true, false, false, false,false },
-            {true, true, true, false,false },
+            {true, true, true, true,false },
        };
 
         var activeBlockForm = (GameObject)Instantiate(blockFormationPrefab, spawnPoint.position, Quaternion.identity);

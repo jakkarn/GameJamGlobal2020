@@ -89,23 +89,19 @@ public class BuildGridState : MonoBehaviour
 
         if (Input.GetAxisRaw("Vertical") == 1f)
         {
-            Debug.Log($"Up");
             setDirection(Direction.up);
         }
         if (Input.GetAxisRaw("Vertical") == -1f)
         {
             setDirection(Direction.down);
-            Debug.Log($"Down");
         }
         if (Input.GetAxisRaw("Horizontal") == 1f)
         {
             setDirection(Direction.right);
-            Debug.Log($"Right");
         }
         if (Input.GetAxisRaw("Horizontal") == -1f)
         {
             setDirection(Direction.left);
-            Debug.Log($"Left");
         }
 
 
