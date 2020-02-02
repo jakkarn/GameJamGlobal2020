@@ -21,8 +21,13 @@ public class SpawnManager : MonoBehaviour
     private Transform bottomBorder;
 
     private BlockFormation activeBlockFormation;
+    public bool player1T = true;
+    public bool player2T = false;
 
     public GameObject GridState;
+
+    public GameObject Player;
+    private BuilderController playerScript;
 
     private BuildGridState gridState;
 
@@ -35,6 +40,7 @@ public class SpawnManager : MonoBehaviour
         instantiateNewFormation(null);
 
         gridState = GridState.GetComponent<BuildGridState>();
+        playerScript = Player.GetComponent<BuilderController>();
     }
 
     // Update is called once per frame
@@ -62,9 +68,21 @@ public class SpawnManager : MonoBehaviour
         {
             timeBetweenMoveDowns -= 0.1f;
         }
+        if (counter % 5 == 0)
+        {
+            SwitchPlayer();
+        }
         var activeBlockForm = (GameObject)Instantiate(blockFormationPrefab, spawnPoint.position, Quaternion.identity);
         activeBlockFormation = activeBlockForm.GetComponent<BlockFormation>();
         activeBlockFormation.startGrid = grid != null ? activeBlockFormation.turnPieceRight(grid) : testGrid;
+        
         counter++;
+        
+    }
+
+    private void SwitchPlayer()
+    {
+        player1T = !player1T;
+        player2T = !player2T;
     }
 }

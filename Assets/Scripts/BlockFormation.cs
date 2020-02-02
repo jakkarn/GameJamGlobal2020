@@ -60,7 +60,7 @@ public class BlockFormation: MonoBehaviour
 
         if (Vector2.Distance(transform.position, movePoint.position) <= 0.5f && isActive)
         {
-            if (Input.GetButton("HorizontalRight") || player1 ? Input.GetAxis("Horizontal1") >= 0.75f : false || player2 ? Input.GetAxis("Horizontal2") >= 0.75f : false)
+            if (Input.GetButton("HorizontalRight") || (spawnManager.player1T ? Input.GetAxis("Horizontal1") >= 0.75f : false) || (spawnManager.player2T ? Input.GetAxis("Horizontal2") >= 0.75f : false))
             {
                 transform.position += new Vector3(1f, 0f);
                 if (!validMove())
@@ -68,9 +68,11 @@ public class BlockFormation: MonoBehaviour
                     transform.position -= new Vector3(1f, 0f);
                 }
             }
-
-            if (Input.GetButton("HorizontalLeft") || player1 ? Input.GetAxis("Horizontal1") < -0.75f : false || player2 ? Input.GetAxis("Horizontal2") < -0.75f : false)
+            
+            if (Input.GetButton("HorizontalLeft") || (spawnManager.player1T ? Input.GetAxis("Horizontal1") < -0.75f : false) || (spawnManager.player2T ? Input.GetAxis("Horizontal2") < -0.75f : false))
             {
+                var value1 = (player1 ? Input.GetAxis("Horizontal1") < -0.75f : false);
+                var value2 = (player2 ? Input.GetAxis("Horizontal2") < -0.75f : false);
                 transform.position += new Vector3(-1f, 0f);
                 if (!validMove())
                 {
@@ -78,7 +80,7 @@ public class BlockFormation: MonoBehaviour
                 }
             }
 
-            if (Input.GetButton("Vertical") || player1 ? Input.GetAxis("Vertical1") < -0.75f : false || player2 ? Input.GetAxis("Vertical2") < -0.75f : false)
+            if (Input.GetButton("Vertical") || (spawnManager.player1T ? Input.GetAxis("Vertical1") < -0.75f : false) || (spawnManager.player2T ? Input.GetAxis("Vertical2") < -0.75f : false))
             {
                 transform.position += new Vector3(0f, -1);
                 if (!validMove())
@@ -89,19 +91,19 @@ public class BlockFormation: MonoBehaviour
             }
         }
 
-        if (player1 ? Input.GetButtonDown("z1") : false || player2 ? Input.GetButtonDown("z2") : false)
+        if (spawnManager.player1T ? Input.GetButtonDown("z1") : false || spawnManager.player2T ? Input.GetButtonDown("z2") : false)
         {
             currentGrid = turnPieceLeft(currentGrid);
             createGrid(currentGrid);
         }
 
-        if (player1 ? Input.GetButtonDown("x1") : false || player2 ? Input.GetButtonDown("x2") : false)
+        if (spawnManager.player1T ? Input.GetButtonDown("x1") : false || spawnManager.player2T ? Input.GetButtonDown("x2") : false)
         {
             currentGrid = turnPieceRight(currentGrid);
             createGrid(currentGrid);
         }
 
-        if (player1 ? Input.GetButtonDown("downfall1") : false || player2 ? Input.GetButtonDown("downfall2") : false)
+        if (spawnManager.player1T ? Input.GetButtonDown("downfall1") : false || spawnManager.player2T ? Input.GetButtonDown("downfall2") : false)
         {
             do
             {
@@ -114,12 +116,6 @@ public class BlockFormation: MonoBehaviour
 
         moveIntoField();
 
-    }
-
-    public void SwitchPlayer()
-    {
-        player1 = !player1;
-        player2 = !player2;
     }
 
     private void moveIntoField()

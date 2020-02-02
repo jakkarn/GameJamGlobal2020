@@ -24,11 +24,17 @@ public class BuilderController : MonoBehaviour
     [SerializeField]
     private float moveInitialDelay;
 
+    private SpawnManager spawnManagerScript;
+    public GameObject spawnManager;
+
+    private bool player2 = true;
+    private bool player1 = false;
+
     // Start is called before the first frame update
     void Start()
     {
         buildGridState = gridStateGameObject.GetComponent<BuildGridState>();
-        
+        spawnManagerScript = spawnManager.GetComponent<SpawnManager>();
         InitializeLocks();
     }
 
@@ -236,7 +242,7 @@ public class BuilderController : MonoBehaviour
         {
             dir = Direction.none;
         }
-
+        
         return dir;
     }
 
@@ -246,8 +252,8 @@ public class BuilderController : MonoBehaviour
 
         if(controller != 0) 
         {
-            var xAxis = Input.GetAxis("Horizontal" + controller);
-            var yAxis = Input.GetAxis("Vertical" + controller);
+            var xAxis = (!spawnManagerScript.player1T ? Input.GetAxis("Horizontal1") : 0) + (!spawnManagerScript.player2T ? Input.GetAxis("Horizontal2") : 0);
+            var yAxis = (!spawnManagerScript.player1T ? Input.GetAxis("Vertical1" ) : 0) + (!spawnManagerScript.player2T ? Input.GetAxis("Vertical2") : 0);
             
             //Debug.Log($"controller1: {xAxis}, {yAxis}");
             
@@ -294,7 +300,7 @@ public class BuilderController : MonoBehaviour
         if (controller != 0) 
         {
 
-            if (Input.GetButtonDown("Placeblock" + controller)) 
+            if (!spawnManagerScript.player1T ? Input.GetButtonDown("Placeblock1") : false || !spawnManagerScript.player2T ? Input.GetButtonDown("Placeblock2") : false) 
             {
                 //Debug.Log($"controller1: {Input.GetButtonDown("Placeblock" + controller)}");
                 return true;
