@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridStateGameObject: {fileID: 0}
+  controller: 0
   moveDelay: 0.1
   moveInitialDelay: 0.3
 --- !u!1 &3322754221891762372

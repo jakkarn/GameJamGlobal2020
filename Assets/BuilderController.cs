@@ -35,6 +35,8 @@ public class BuilderController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //DebugJoystick();
+
         Direction dir;
 
         if (controller == 0)
@@ -50,9 +52,14 @@ public class BuilderController : MonoBehaviour
 
         Move(dir);
 
+        //Debug.Log($"Horizontal axis: {Input.GetAxis("Horizontal")}");
+
         // Listen to action input
-        if (Input.GetKeyDown("q"))
-        //if (PlaceBlockPressed())
+        if (controller == 0 && Input.GetKeyDown("q"))
+        {
+            buildGridState.ToggleBuildBlock();
+        }
+        else if (PlaceBlockPressed())
         {
             buildGridState.ToggleBuildBlock();
         }
@@ -242,7 +249,7 @@ public class BuilderController : MonoBehaviour
             var xAxis = Input.GetAxis("Horizontal" + controller);
             var yAxis = Input.GetAxis("Vertical" + controller);
             
-            Debug.Log($"controller1: {xAxis}, {yAxis}");
+            //Debug.Log($"controller1: {xAxis}, {yAxis}");
             
             var r = xAxis > 0;
             var l = xAxis < 0;
@@ -286,14 +293,25 @@ public class BuilderController : MonoBehaviour
     {
         if (controller != 0) 
         {
-            Debug.Log($"controller1: {Input.GetButtonDown("Placeblock" + controller)}");
 
             if (Input.GetButtonDown("Placeblock" + controller)) 
             {
+                //Debug.Log($"controller1: {Input.GetButtonDown("Placeblock" + controller)}");
                 return true;
             }
         }
 
         return false;
+    }
+
+    private void DebugJoystick()
+    {
+        for (int i = 1; i <= 5; ++i)
+        {
+            if(Input.GetButtonDown("Placeblock" + i))
+            {
+                //Debug.Log("Button" + i + "pressed");
+            }
+        }
     }
 }
