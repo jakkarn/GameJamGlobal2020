@@ -47,8 +47,8 @@ public class BuildGridView : MonoBehaviour
         if(timeLeft < 0)
         {
             // Destroy old blocks?
-            gridState.reset();
-            timeLeft = timeLeftDefault;
+            //gridState.reset();
+            //timeLeft = timeLeftDefault;
         }
 
         // Update selected block incase change has been made.

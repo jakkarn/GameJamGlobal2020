@@ -20,10 +20,15 @@ public class StaticBlockContainer : MonoBehaviour
 
     private List<Transform> instances = new List<Transform>();
 
+    [SerializeField]
+    private GameObject state;
+
+    private BuildGridState buildGridState;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        buildGridState = state.GetComponent<BuildGridState>();
     }
 
     // Update is called once per frame
@@ -48,6 +53,8 @@ public class StaticBlockContainer : MonoBehaviour
         {
             blockFormation.GetChild(i).transform.parent = transform;
         }
+
+        buildGridState.reset();
     }
 
     public bool isPositionFree(int x, int y)

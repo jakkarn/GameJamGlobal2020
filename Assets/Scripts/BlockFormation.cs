@@ -44,7 +44,7 @@ public class BlockFormation: MonoBehaviour
         buildGridState = FindObjectOfType<BuildGridState>();
         isActive = true;
         movePoint.parent = null;
-        InvokeRepeating("moveDown", 0, SpawnManager.timeBetweenMoveDowns);
+        InvokeRepeating("moveDown", 0, 1f);
 
         gridblocks = new GameObject[buildGridState.gridWidth, buildGridState.gridWidth];
         blockSizeX = DefaultBlockPrefab.GetComponent<Renderer>().bounds.size.x;
@@ -169,7 +169,6 @@ public class BlockFormation: MonoBehaviour
         staticBlockContainer.addBlock(transform);
 
         staticBlockContainer.checkLines();
-        spawnManager.instantiateNewFormation(null);
 
         Destroy(gameObject);
 

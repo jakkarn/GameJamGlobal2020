@@ -217,6 +217,6 @@ public class BuildGridState : MonoBehaviour
      public void NewFormation()
     {
         buildBlockFormation = grid;
-        BlockCounter.RemoveCreatedFormationBlocks(buildBlockFormation.CountSetValues());
+        //BlockCounter.RemoveCreatedFormationBlocks(buildBlockFormation.CountSetValues());
     }
 }

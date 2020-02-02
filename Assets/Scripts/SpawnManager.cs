@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
 
-    public static float timeBetweenMoveDowns = 1f;
+    public float timeBetweenMoveDowns = 1f;
 
     [SerializeField]
     private GameObject blockFormationPrefab;
