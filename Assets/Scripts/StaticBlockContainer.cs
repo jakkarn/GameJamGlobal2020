@@ -71,14 +71,19 @@ public class StaticBlockContainer : MonoBehaviour
 
     public void checkLines()
     {
+        var rowWasDeleted = false;
         for (int i = 0; i < boardHeight - 1; i++)
         {
             if (hasLine(i))
             {
                 deleteLine(i);
                 rowDown(i);
-
+                rowWasDeleted = true;
             }
+        }
+        if (rowWasDeleted)
+        {
+            checkLines();
         }
     }
 
