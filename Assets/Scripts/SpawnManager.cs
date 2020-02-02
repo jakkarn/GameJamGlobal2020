@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+
+    public static float timeBetweenMoveDowns = 1f;
+
     [SerializeField]
     private GameObject blockFormationPrefab;
 
@@ -23,19 +26,11 @@ public class SpawnManager : MonoBehaviour
 
     private BuildGridState gridState;
 
+    private int counter = 1;
+
     // Start is called before the first frame update
     void Start()
     {
-        //var testGrid = new bool[5, 5]
-        //{
-        //    { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
-        //    { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
-        //    { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
-        //    { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
-        //    { (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f), (Random.value > 0.5f) },
-        //};
-
-
 
         instantiateNewFormation(null);
 
@@ -63,9 +58,13 @@ public class SpawnManager : MonoBehaviour
             {true, false, false, false,false },
             {true, true, true, true,false },
        };
-
+        if (counter % 5 == 0)
+        {
+            timeBetweenMoveDowns = timeBetweenMoveDowns - 0.1f;
+        }
         var activeBlockForm = (GameObject)Instantiate(blockFormationPrefab, spawnPoint.position, Quaternion.identity);
         activeBlockFormation = activeBlockForm.GetComponent<BlockFormation>();
         activeBlockFormation.startGrid = grid != null ? activeBlockFormation.turnPieceRight(grid) : testGrid;
+        counter++;
     }
 }
