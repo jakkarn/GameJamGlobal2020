@@ -82,7 +82,7 @@ public class BuildGridState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log($"Start {nameof(BuildGridState)}");
+        //Debug.Log($"Start {nameof(BuildGridState)}");
 
         grid.Fill(new Vector2(gridWidth, gridHeight));
         grid.Set(new Vector2(3, 3), true);

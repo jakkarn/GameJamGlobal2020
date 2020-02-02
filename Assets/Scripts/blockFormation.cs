@@ -159,12 +159,9 @@ public class BlockFormation: MonoBehaviour
     {
         
         isActive = false;
-        int childCount = transform.childCount;
-        for (int i = childCount - 1 ; i >= 0; i--)
-        {
-            staticBlockContainer.addBlock(transform.GetChild(i).transform);
-            transform.GetChild(i).parent = staticBlockContainer.transform;
-        }
+        staticBlockContainer.addBlock(transform);
+
+        staticBlockContainer.checkLines();
         spawnManager.instantiateNewFormation(null);
         Destroy(gameObject);
 

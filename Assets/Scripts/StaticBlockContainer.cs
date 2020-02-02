@@ -13,7 +13,7 @@ public class StaticBlockContainer : MonoBehaviour
     [SerializeField]
     private GameObject destroyLine;
 
-    public static int boardHeight = 24;
+    public static int boardHeight = 25;
     public static int boardWidth = 14;
 
     public static Transform[,] staticGrid = new Transform[boardWidth, boardHeight];
@@ -32,16 +32,22 @@ public class StaticBlockContainer : MonoBehaviour
 
     }
 
-    public void addBlock(Transform transform)
+    public void addBlock(Transform blockFormation)
     {
+        foreach (Transform child in blockFormation)
+        {
+            int roundedX = Mathf.RoundToInt(child.transform.position.x);
+            int roundedY = Mathf.RoundToInt(child.transform.position.y);
 
-        int roundedX = Mathf.RoundToInt(transform.position.x);
-        int roundedY = Mathf.RoundToInt(transform.position.y);
+            staticGrid[roundedX, roundedY] = child;
+            SpriteRenderer childRenderer = child.GetComponent<SpriteRenderer>();
+            childRenderer.sprite = frozenSprite;
+        }
 
-        staticGrid[roundedX, roundedY] = transform;
-        SpriteRenderer childRenderer = transform.GetComponent<SpriteRenderer>();
-        childRenderer.sprite = frozenSprite;
-        checkLines();
+        for (int i = blockFormation.childCount - 1; i >= 0 ; i--)
+        {
+            blockFormation.GetChild(i).transform.parent = transform;
+        }
     }
 
     public bool isPositionFree(int x, int y)
@@ -63,7 +69,7 @@ public class StaticBlockContainer : MonoBehaviour
           return true;
     }
 
-    private void checkLines()
+    public void checkLines()
     {
         for (int i = 0; i < boardHeight - 1; i++)
         {
@@ -98,7 +104,7 @@ public class StaticBlockContainer : MonoBehaviour
                 Instantiate(destroyLine, staticGrid[j, index].transform.position, Quaternion.identity);
             }
             Destroy(staticGrid[j, index].gameObject);
-            staticGrid[index, j] = null;
+            staticGrid[j, index] = null;
         }
     }
 
@@ -121,29 +127,3 @@ public class StaticBlockContainer : MonoBehaviour
     }
 }
 
-//    private void checkForFullLines()
-//    {
-//        for (int i = 0; i < boardGrid.GetLength(0) -1; i++)
-//        {
-//            var removeLine = true;
-//            for (int j = 0; j < boardGrid.GetLength(1) - 1; j++)
-//            {
-//                if (boardGrid[i, j] == false)
-//                {
-//                    removeLine = false;
-//                }
-//            }
-
-//            if (removeLine)
-//            {
-//                for (int k = 0; k < boardGrid.GetLength(1) - 1; k++)
-//                {
-//                    boardGrid[i, k] = false;
-//                    var instance = instances.Find(x => x.position.x == k && x.position.y == i);
-//                    instances.Remove(instance);
-//                    Destroy(instance.gameObject);
-//                }
-//            }
-//        }
-//    }
-//}
