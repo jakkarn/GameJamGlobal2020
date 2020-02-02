@@ -23,7 +23,8 @@ public class BlockFormation: MonoBehaviour
     public static int boardHeight = 24;
     public static int boardWidth = 14;
 
-  
+    private bool player1 = true;
+    private bool player2 = false;
     
     [SerializeField]
     private BuildGridState buildGridState;
@@ -62,9 +63,8 @@ public class BlockFormation: MonoBehaviour
 
         if (Vector2.Distance(transform.position, movePoint.position) <= 0.5f && isActive)
         {
-            if (Input.GetButton("HorizontalRight") || Input.GetAxis("Horizontal1") >= 0.75f)
+            if (Input.GetButton("HorizontalRight") || player1 ? Input.GetAxis("Horizontal1") >= 0.75f : false || player2 ? Input.GetAxis("Horizontal2") >= 0.75f : false)
             {
-                var value = Input.GetAxis("Horizontal1");
                 transform.position += new Vector3(1f, 0f);
                 if (!validMove())
                 {
@@ -72,9 +72,8 @@ public class BlockFormation: MonoBehaviour
                 }
             }
 
-            if (Input.GetButton("HorizontalLeft") || Input.GetAxis("Horizontal1") < -0.75f)
+            if (Input.GetButton("HorizontalLeft") || player1 ? Input.GetAxis("Horizontal1") < -0.75f : false || player2 ? Input.GetAxis("Horizontal2") < -0.75f : false)
             {
-                var value = Input.GetAxis("Horizontal1");
                 transform.position += new Vector3(-1f, 0f);
                 if (!validMove())
                 {
@@ -82,7 +81,7 @@ public class BlockFormation: MonoBehaviour
                 }
             }
 
-            if (Input.GetButton("Vertical") || Input.GetAxis("Vertical1") < -0.75f)
+            if (Input.GetButton("Vertical") || player1 ? Input.GetAxis("Vertical1") < -0.75f : false || player2 ? Input.GetAxis("Vertical2") < -0.75f : false)
             {
                 transform.position += new Vector3(0f, -1);
                 if (!validMove())
@@ -93,19 +92,19 @@ public class BlockFormation: MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("z") == true)
+        if (player1 ? Input.GetButtonDown("z1") : false || player2 ? Input.GetButtonDown("z2") : false)
         {
             currentGrid = turnPieceLeft(currentGrid);
             createGrid(currentGrid);
         }
 
-        if (Input.GetButtonDown("x") == true)
+        if (player1 ? Input.GetButtonDown("x1") : false || player2 ? Input.GetButtonDown("x2") : false)
         {
             currentGrid = turnPieceRight(currentGrid);
             createGrid(currentGrid);
         }
 
-        if (Input.GetButtonDown("downfall"))
+        if (player1 ? Input.GetButtonDown("downfall1") : false || player2 ? Input.GetButtonDown("downfall2") : false)
         {
             do
             {
@@ -118,6 +117,12 @@ public class BlockFormation: MonoBehaviour
 
         moveIntoField();
 
+    }
+
+    public void SwitchPlayer()
+    {
+        player1 = !player1;
+        player2 = !player2;
     }
 
     private void moveIntoField()
