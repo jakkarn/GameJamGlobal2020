@@ -15,6 +15,10 @@ public class BuildGridView : MonoBehaviour
     private Vector2 activeGridPosition = new Vector2();
     private float blockSizeX;
     private float blockSizeY;
+    
+    [SerializeField]
+    private static float timeLeftDefault = 6.0f;
+    private float timeLeft = timeLeftDefault;
 
     public float offsetGridX = -6.2f;
     public float offsetGridY = 1.5f;
@@ -39,6 +43,14 @@ public class BuildGridView : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timeLeft -= Time.deltaTime;
+        if(timeLeft < 0)
+        {
+            // Destroy old blocks?
+            gridState.reset();
+            timeLeft = timeLeftDefault;
+        }
+
         // Update selected block incase change has been made.
         if (activeGridPosition.x != gridState.activePosition.x || gridState.activePosition.y != activeGridPosition.y)
         {

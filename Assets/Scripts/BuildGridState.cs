@@ -7,8 +7,21 @@ public struct Grid<T> {
 
     private bool changed;
 
+    public bool IsEmpty() {
+        return grid == null;
+    }
+
     public void Fill(Vector2 vector) {
         grid = new T[(int)vector.x, (int)vector.y];
+
+        changed = true;
+    }
+
+    public void Set(T[,] newGrid)
+    {
+        grid = newGrid;
+
+        changed = true;
     }
 
     public void Set(Vector2 vector, T status) {
@@ -39,10 +52,35 @@ public struct Grid<T> {
         return grid.GetLength(1);
     }
 
+    public T[,] GetInnerGrid() {
+        return grid;
+    }
+
     public bool Exists(Vector2 vector) {
         return this.GetMaxX() < vector.x && vector.x >= 0 &&
             this.GetMaxY() > vector.y && vector.y >= 0;
     }
+
+    public void Clear() {
+        grid = null;
+    }
+
+    // public int CountSetValues()
+    // {
+    //     var setValueCount = 0;
+
+    //     for (int x = 0; x < GetMaxY(); ++x)
+    //     {
+    //         for (int y = 0; y < GetMaxX(); ++y)
+    //         {
+    //             if (GetValue(new Vector2(x, y)).Equals(default(T)))
+    //             {
+    //                 setValueCount++;
+    //             }
+    //         }
+    //     }
+    //     return setValueCount;
+    // }
 }
 
 public enum Direction {
@@ -79,13 +117,18 @@ public class BuildGridState : MonoBehaviour
 
     public Direction storedDirection = Direction.none;
 
+    private Grid<bool> buildBlockFormation;
+
+    // public GameObject BlockCounterObject;
+    // private BlockCounter BlockCounter;
+
     // Start is called before the first frame update
     void Start()
     {
         //Debug.Log($"Start {nameof(BuildGridState)}");
 
         grid.Fill(new Vector2(gridWidth, gridHeight));
-        grid.Set(new Vector2(3, 3), true);
+        // BlockCounter = BlockCounterObject.GetComponent<BlockCounter>();
 
         grid.GetMaxX();
         grid.GetMaxY();
@@ -114,8 +157,15 @@ public class BuildGridState : MonoBehaviour
         return false;
     }
 
+    public void reset()
+    {
+        this.NewFormation();
+        grid.Fill(new Vector2(gridWidth, gridHeight));
+    }
+
     public void ToggleBuildBlock()
     {
+        moveIsLocked = true;
         grid.Set(activePosition, !grid.GetValue(activePosition));
     }
 
@@ -155,5 +205,19 @@ public class BuildGridState : MonoBehaviour
         }
 
         moveIsLocked = true;
+    }
+
+    public bool[,] GetNewFormation()
+    {
+        var newFormation = buildBlockFormation.GetInnerGrid();
+        buildBlockFormation.Clear();
+
+        return newFormation;
+    }
+
+     public void NewFormation()
+    {
+        buildBlockFormation = grid;
+        // BlockCounter.RemoveCreatedFormationBlocks();
     }
 }
